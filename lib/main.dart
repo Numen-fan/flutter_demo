@@ -1,4 +1,5 @@
 import 'package:counter_flutter_demo/entity/route_data.dart';
+import 'package:counter_flutter_demo/pages/cart_provider_page.dart';
 import 'package:counter_flutter_demo/pages/form_test_route.dart';
 import 'package:counter_flutter_demo/pages/new_home_page.dart';
 import 'package:counter_flutter_demo/pages/new_route_page.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         RouteData.formTestPage: (context) => const FormTestPage(),
         RouteData.oldHomePage: (context) => const MyHomePage(title: ""),
         RouteData.scrollControllerPage: (context) => const ScrollControllerTestPage(),
+        RouteData.cartProviderPage: (context) => CartProviderRoute(),
       }, // 命名路由
 
       // onGenerateRoute: (RouteSettings settings) {
