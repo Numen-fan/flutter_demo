@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:counter_flutter_demo/entity/cart_item.dart';
 import 'package:flutter/material.dart';
 
-/// 跨组件共享的model类
+/// 跨组件共享的model类，继承ChangeNotifier，作为事件发布者
 class CartModel extends ChangeNotifier {
 
   // 用于保存购物车中商品列表
