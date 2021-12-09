@@ -5,10 +5,19 @@ import 'package:counter_flutter_demo/pages/new_home_page.dart';
 import 'package:counter_flutter_demo/pages/new_route_page.dart';
 import 'package:counter_flutter_demo/pages/home_page.dart';
 import 'package:counter_flutter_demo/pages/scroll_controller_page.dart';
+import 'package:counter_flutter_demo/redux/counter_state.dart';
+import 'package:counter_flutter_demo/redux_app.dart';
+import 'package:counter_flutter_demo/scoped_model_app.dart';
 import 'package:flutter/material.dart';
+import 'package:redux/redux.dart';
 
 void main() {
-  runApp(const MyApp());
+  // runApp(const MyApp());
+  // runApp(const ScopedModelApp());
+
+  // final store = Store<CounterState>(reducer,
+  //     initialState: const CounterState.initState());
+  runApp(ReduxApp());
 }
 
 // StatelessWidget表示没有状态的组件

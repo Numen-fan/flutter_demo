@@ -1,5 +1,5 @@
 import 'package:counter_flutter_demo/entity/cart_item.dart';
-import 'package:counter_flutter_demo/entity/cart_model.dart';
+import 'package:counter_flutter_demo/model/cart_model.dart';
 import 'package:counter_flutter_demo/provider/change_notifier_provider.dart';
 import 'package:counter_flutter_demo/widgets/consumer.dart';
 import 'package:flutter/cupertino.dart';
