@@ -1,23 +1,35 @@
 import 'package:counter_flutter_demo/entity/route_data.dart';
-import 'package:counter_flutter_demo/pages/cart_provider_page.dart';
+import 'package:counter_flutter_demo/provider/cart_provider_page.dart';
 import 'package:counter_flutter_demo/pages/form_test_route.dart';
 import 'package:counter_flutter_demo/pages/new_home_page.dart';
 import 'package:counter_flutter_demo/pages/new_route_page.dart';
 import 'package:counter_flutter_demo/pages/home_page.dart';
 import 'package:counter_flutter_demo/pages/scroll_controller_page.dart';
+import 'package:counter_flutter_demo/provider_app.dart';
+import 'package:counter_flutter_demo/provider_new/counter_provider_model.dart';
 import 'package:counter_flutter_demo/redux/counter_state.dart';
 import 'package:counter_flutter_demo/redux_app.dart';
 import 'package:counter_flutter_demo/scoped_model_app.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
 void main() {
   // runApp(const MyApp());
-  // runApp(const ScopedModelApp());
+  // runApp(const ScopedModelApp()); // Scoped model
 
-  // final store = Store<CounterState>(reducer,
-  //     initialState: const CounterState.initState());
-  runApp(ReduxApp());
+  // runApp(ReduxApp()); // redux
+
+  // provider
+  final CounterProviderModel counterModel = CounterProviderModel();
+  int textSize = 48;
+  runApp(Provider<int>.value(  // 将textSize提供给子孙节点使用, 泛型可省略，建议保留
+    value: textSize,
+    child: ChangeNotifierProvider.value( // 不仅能够提供数据供子孙节点使用，还可以在数据改变的时候通知所有听众刷新。
+      value: counterModel,
+      child: ProviderApp(),
+    ),
+  ));
 }
 
 // StatelessWidget表示没有状态的组件
@@ -39,7 +51,8 @@ class MyApp extends StatelessWidget {
         "/": (context) => const NewHomePage(), // 首页路由
         RouteData.formTestPage: (context) => const FormTestPage(),
         RouteData.oldHomePage: (context) => const MyHomePage(title: ""),
-        RouteData.scrollControllerPage: (context) => const ScrollControllerTestPage(),
+        RouteData.scrollControllerPage: (context) =>
+            const ScrollControllerTestPage(),
         RouteData.cartProviderPage: (context) => CartProviderRoute(),
       }, // 命名路由
 
@@ -58,9 +71,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-

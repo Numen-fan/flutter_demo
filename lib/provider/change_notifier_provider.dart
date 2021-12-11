@@ -1,4 +1,4 @@
-import 'package:counter_flutter_demo/widgets/inherited_provider.dart';
+import 'package:counter_flutter_demo/provider/inherited_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';

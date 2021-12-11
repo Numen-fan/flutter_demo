@@ -46,6 +46,9 @@ dependencies:
   redux: ^5.0.0
   flutter_redux: 0.8.2
 
+  # provider
+  provider: ^6.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
