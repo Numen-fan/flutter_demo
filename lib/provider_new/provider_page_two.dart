@@ -28,9 +28,11 @@ class ProviderPageTwo extends StatelessWidget {
             onPressed: () {
               counter.increment();
             },
-            child: const Icon(Icons.add),
+            child: child,
           );
         },
+        // child是不依赖model部分，不会重建，Q：如果有多个child怎么办呢？？？
+        child: const Icon(Icons.add),
       ),
     );
   }

@@ -9,6 +9,7 @@ class ProviderPageOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 通过Provider.of<T>(context)，会使得使用了这个context的整个页面rebuild，也就是这里的build方法会被频繁调用
     final _counter =
         Provider.of<CounterProviderModel>(context); // 向上获取到CounterProviderModel类型的provider实例
     final _textSize = Provider.of<int>(context).toDouble(); // 向上获取int类型的数据

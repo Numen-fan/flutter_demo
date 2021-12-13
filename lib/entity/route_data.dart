@@ -1,10 +1,10 @@
 /// 路由数据
 class RouteData {
-
   static const String formTestPage = "form_test_route";
   static const String oldHomePage = "old_home_page";
   static const String scrollControllerPage = "scroll_controller_page";
   static const String cartProviderPage = "cart_provider_page";
+  static const String providerSelectorPage = "providerSelectorPage";
 
   final String title;
   final String route;
@@ -16,5 +16,6 @@ class RouteData {
     RouteData("旧主页", oldHomePage),
     RouteData("ScrollController", scrollControllerPage),
     RouteData("CartProvider", cartProviderPage),
+    RouteData("Provider selector page", providerSelectorPage)
   ];
 }

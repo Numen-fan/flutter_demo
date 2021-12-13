@@ -7,6 +7,7 @@ import 'package:counter_flutter_demo/pages/home_page.dart';
 import 'package:counter_flutter_demo/pages/scroll_controller_page.dart';
 import 'package:counter_flutter_demo/provider_app.dart';
 import 'package:counter_flutter_demo/provider_new/counter_provider_model.dart';
+import 'package:counter_flutter_demo/provider_new/provider_selector_page.dart';
 import 'package:counter_flutter_demo/redux/counter_state.dart';
 import 'package:counter_flutter_demo/redux_app.dart';
 import 'package:counter_flutter_demo/scoped_model_app.dart';
@@ -23,12 +24,23 @@ void main() {
   // provider
   final CounterProviderModel counterModel = CounterProviderModel();
   int textSize = 48;
-  runApp(Provider<int>.value(  // 将textSize提供给子孙节点使用, 泛型可省略，建议保留
-    value: textSize,
-    child: ChangeNotifierProvider.value( // 不仅能够提供数据供子孙节点使用，还可以在数据改变的时候通知所有听众刷新。
-      value: counterModel,
-      child: ProviderApp(),
-    ),
+  // runApp(Provider<int>.value(
+  //   // 将textSize提供给子孙节点使用, 泛型可省略，建议保留
+  //   value: textSize,
+  //   child: ChangeNotifierProvider.value(
+  //     // 不仅能够提供数据供子孙节点使用，还可以在数据改变的时候通知所有听众刷新。
+  //     value: counterModel,
+  //     child: ProviderApp(),
+  //   ),
+  // ));
+
+  /// 使用[MultiProvider]，MultiProvider内部自动转为上述嵌套形式
+  runApp(MultiProvider(
+    providers: [
+      Provider<int>.value(value: textSize),
+      ChangeNotifierProvider.value(value: counterModel),
+    ],
+    child: ProviderApp(),
   ));
 }
 
@@ -54,6 +66,7 @@ class MyApp extends StatelessWidget {
         RouteData.scrollControllerPage: (context) =>
             const ScrollControllerTestPage(),
         RouteData.cartProviderPage: (context) => CartProviderRoute(),
+        RouteData.providerSelectorPage: (context) => ProviderSelectorPage()
       }, // 命名路由
 
       // onGenerateRoute: (RouteSettings settings) {
