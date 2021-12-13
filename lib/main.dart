@@ -16,12 +16,17 @@ import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
 void main() {
-  // runApp(const MyApp());
-  // runApp(const ScopedModelApp()); // Scoped model
 
-  // runApp(ReduxApp()); // redux
+  /// normal
+  runApp(const MyApp());
 
-  // provider
+  /// Scoped model
+  // runApp(const ScopedModelApp());
+
+  /// redux
+  // runApp(ReduxApp());
+
+  /// provider
   final CounterProviderModel counterModel = CounterProviderModel();
   int textSize = 48;
   // runApp(Provider<int>.value(
@@ -34,14 +39,14 @@ void main() {
   //   ),
   // ));
 
-  /// 使用[MultiProvider]，MultiProvider内部自动转为上述嵌套形式
-  runApp(MultiProvider(
-    providers: [
-      Provider<int>.value(value: textSize),
-      ChangeNotifierProvider.value(value: counterModel),
-    ],
-    child: ProviderApp(),
-  ));
+  /// provider——>使用[MultiProvider]，MultiProvider内部自动转为上述嵌套形式
+  // runApp(MultiProvider(
+  //   providers: [
+  //     Provider<int>.value(value: textSize),
+  //     ChangeNotifierProvider.value(value: counterModel),
+  //   ],
+  //   child: ProviderApp(),
+  // ));
 }
 
 // StatelessWidget表示没有状态的组件
@@ -66,7 +71,7 @@ class MyApp extends StatelessWidget {
         RouteData.scrollControllerPage: (context) =>
             const ScrollControllerTestPage(),
         RouteData.cartProviderPage: (context) => CartProviderRoute(),
-        RouteData.providerSelectorPage: (context) => ProviderSelectorPage()
+        RouteData.providerSelectorPage: (context) => const ProviderSelectorPage()
       }, // 命名路由
 
       // onGenerateRoute: (RouteSettings settings) {
