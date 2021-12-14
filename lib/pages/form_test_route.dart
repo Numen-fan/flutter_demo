@@ -3,6 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 class FormTestPage extends StatelessWidget {
+
+  static const String routeName = "FormTestPage";
+
   const FormTestPage({Key? key}) : super(key: key);
 
   @override

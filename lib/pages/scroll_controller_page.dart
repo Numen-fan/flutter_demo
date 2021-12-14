@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 class ScrollControllerTestPage extends StatefulWidget {
 
+  static const String routeName = "ScrollControllerTestPage";
+
   const ScrollControllerTestPage({Key? key}) : super(key: key);
 
   @override

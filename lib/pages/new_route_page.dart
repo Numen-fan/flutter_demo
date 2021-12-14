@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class NewRoutePage extends StatelessWidget {
+
+  static const String routeName = "NewRoutePage";
+
   const NewRoutePage({Key? key}) : super(key: key);
 
   @override

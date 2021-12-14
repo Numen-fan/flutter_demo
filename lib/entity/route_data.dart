@@ -1,10 +1,12 @@
+import 'package:counter_flutter_demo/pages/form_test_route.dart';
+import 'package:counter_flutter_demo/pages/home_page.dart';
+import 'package:counter_flutter_demo/pages/scroll_controller_page.dart';
+import 'package:counter_flutter_demo/pages/tv_demo.dart';
+import 'package:counter_flutter_demo/provider/cart_provider_page.dart';
+import 'package:counter_flutter_demo/provider_new/provider_selector_page.dart';
+
 /// 路由数据
 class RouteData {
-  static const String formTestPage = "form_test_route";
-  static const String oldHomePage = "old_home_page";
-  static const String scrollControllerPage = "scroll_controller_page";
-  static const String cartProviderPage = "cart_provider_page";
-  static const String providerSelectorPage = "providerSelectorPage";
 
   final String title;
   final String route;
@@ -12,10 +14,11 @@ class RouteData {
   const RouteData(this.title, this.route);
 
   static const List<RouteData> routes = <RouteData>[
-    RouteData("表单页面", formTestPage),
-    RouteData("旧主页", oldHomePage),
-    RouteData("ScrollController", scrollControllerPage),
-    RouteData("CartProvider", cartProviderPage),
-    RouteData("Provider selector page", providerSelectorPage)
+    RouteData("表单页面", FormTestPage.routeName),
+    RouteData("旧主页", MyHomePage.routeName),
+    RouteData("ScrollController", ScrollControllerTestPage.routeName),
+    RouteData("CartProvider", CartProviderRoute.routName),
+    RouteData("Provider selector page", ProviderSelectorPage.routeName),
+    RouteData("Tv Demo", TvDemoPage.routeName),
   ];
 }

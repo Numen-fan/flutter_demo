@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 
 /// 一个入口页面，展示一个列表，提供所有测试页面的入口
 class NewHomePage extends StatelessWidget {
+
+  static const String routeName = "NewHomePage";
+
   const NewHomePage({Key? key}) : super(key: key);
 
   @override

@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProviderSelectorPage extends StatelessWidget {
+
+  static const String routeName = "ProviderSelectorPage";
+
   const ProviderSelectorPage({Key? key}) : super(key: key);
 
   @override

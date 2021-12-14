@@ -5,6 +5,9 @@ import 'package:english_words/english_words.dart';
 
 // StatefulWidget表示有状态的组件
 class MyHomePage extends StatefulWidget {
+
+  static const String routeName = "MyHomePage";
+
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;

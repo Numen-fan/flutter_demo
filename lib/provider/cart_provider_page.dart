@@ -7,6 +7,11 @@ import 'package:flutter/material.dart';
 
 /// 采用Provider的购物车页面
 class CartProviderRoute extends StatefulWidget {
+
+  static const String routName = "CartProviderRoute";
+
+  const CartProviderRoute({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _CartProviderRouteState();
 }

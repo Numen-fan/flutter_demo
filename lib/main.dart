@@ -1,4 +1,5 @@
 import 'package:counter_flutter_demo/entity/route_data.dart';
+import 'package:counter_flutter_demo/pages/tv_demo.dart';
 import 'package:counter_flutter_demo/provider/cart_provider_page.dart';
 import 'package:counter_flutter_demo/pages/form_test_route.dart';
 import 'package:counter_flutter_demo/pages/new_home_page.dart';
@@ -66,12 +67,12 @@ class MyApp extends StatelessWidget {
       // 注册路由表
       routes: <String, WidgetBuilder>{
         "/": (context) => const NewHomePage(), // 首页路由
-        RouteData.formTestPage: (context) => const FormTestPage(),
-        RouteData.oldHomePage: (context) => const MyHomePage(title: ""),
-        RouteData.scrollControllerPage: (context) =>
-            const ScrollControllerTestPage(),
-        RouteData.cartProviderPage: (context) => CartProviderRoute(),
-        RouteData.providerSelectorPage: (context) => const ProviderSelectorPage()
+        NewHomePage.routeName: (context) => const FormTestPage(),
+        MyHomePage.routeName: (context) => const MyHomePage(title: ""),
+        ScrollControllerTestPage.routeName: (context) => const ScrollControllerTestPage(),
+        CartProviderRoute.routName: (context) => const CartProviderRoute(),
+        ProviderSelectorPage.routeName: (context) => const ProviderSelectorPage(),
+        TvDemoPage.routeName: (_) => const TvDemoPage()
       }, // 命名路由
 
       // onGenerateRoute: (RouteSettings settings) {
