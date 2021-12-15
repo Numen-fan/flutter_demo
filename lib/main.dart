@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
       // 注册路由表
       routes: <String, WidgetBuilder>{
         "/": (context) => const NewHomePage(), // 首页路由
-        NewHomePage.routeName: (context) => const FormTestPage(),
+        FormTestPage.routeName: (context) => const FormTestPage(),
         MyHomePage.routeName: (context) => const MyHomePage(title: ""),
         ScrollControllerTestPage.routeName: (context) => const ScrollControllerTestPage(),
         CartProviderRoute.routName: (context) => const CartProviderRoute(),
