@@ -42,14 +42,9 @@ dependencies:
   # scoped_model
   scoped_model: ^2.0.0-nullsafety.0
 
-  # redux
   redux: ^5.0.0
   flutter_redux: 0.8.2
-
-  # provider
   provider: ^6.0.1
-
-  #svg
   flutter_svg: ^1.0.0
 
 dev_dependencies:

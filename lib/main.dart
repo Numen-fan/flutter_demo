@@ -1,4 +1,5 @@
 import 'package:counter_flutter_demo/entity/route_data.dart';
+import 'package:counter_flutter_demo/pages/bubble_page.dart';
 import 'package:counter_flutter_demo/pages/tv_demo.dart';
 import 'package:counter_flutter_demo/provider/cart_provider_page.dart';
 import 'package:counter_flutter_demo/pages/form_test_route.dart';
@@ -72,7 +73,8 @@ class MyApp extends StatelessWidget {
         ScrollControllerTestPage.routeName: (context) => const ScrollControllerTestPage(),
         CartProviderRoute.routName: (context) => const CartProviderRoute(),
         ProviderSelectorPage.routeName: (context) => const ProviderSelectorPage(),
-        TvDemoPage.routeName: (_) => const TvDemoPage()
+        TvDemoPage.routeName: (_) => const TvDemoPage(),
+        BubblePage.routeName: (_) => const BubblePage()
       }, // 命名路由
 
       // onGenerateRoute: (RouteSettings settings) {
