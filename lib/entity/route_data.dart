@@ -1,6 +1,7 @@
 import 'package:counter_flutter_demo/pages/bubble_page.dart';
 import 'package:counter_flutter_demo/pages/form_test_route.dart';
 import 'package:counter_flutter_demo/pages/home_page.dart';
+import 'package:counter_flutter_demo/pages/http_request_page.dart';
 import 'package:counter_flutter_demo/pages/scroll_controller_page.dart';
 import 'package:counter_flutter_demo/pages/tv_demo.dart';
 import 'package:counter_flutter_demo/provider/cart_provider_page.dart';
@@ -21,6 +22,7 @@ class RouteData {
     RouteData("CartProvider", CartProviderRoute.routName),
     RouteData("Provider selector page", ProviderSelectorPage.routeName),
     RouteData("Tv Demo", TvDemoPage.routeName),
-    RouteData("Bubble Demo", BubblePage.routeName)
+    RouteData("Bubble Demo", BubblePage.routeName),
+    RouteData("HttpClient page", HttpRequestPage.routeName)
   ];
 }

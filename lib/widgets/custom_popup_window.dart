@@ -4,12 +4,19 @@ import 'dart:ui';
 import 'package:counter_flutter_demo/popup_window/triangle_painter.dart';
 import 'package:flutter/material.dart';
 
+/// 自定义气泡window
+/// 通过[Overlay] + [OverlayEntry]实现，这种方式使得一个[OverlayEntry]居于所有widget之上
+/// 这种方式有个特点，BuildContext中没有Navigator，因此无法监听页面返回事件，需要在依附页面响应位置调用[OverlayEntry.remove]消除。
+/// 【other】: Flutter中还可以使用[PopupRoute]方式实现气泡，以Route的方式实现，可以监听返回事件，但多用于气泡内有相关操作的场景。
+
+/// 气泡位于目标组件的位置，目前仅提供上下方位。
 enum PopAlignment {
   top, down
 }
 
-/// 自定义气泡
 class CustomPopupWindow {
+
+  static const String logTAG = "CustomPopupWindow：";
 
   BuildContext context;
 
@@ -20,6 +27,10 @@ class CustomPopupWindow {
   double height; // 气泡高度
 
   double width; // 气泡宽度
+
+  /// 箭头偏移量，默认箭头在气泡[child]居中，通过该变量控制向左向右偏移，负值向左，正值向右
+  /// 注意，箭头相对目标锚点区域[targetWidgetRect]始终是居中的《，其本质是移动气泡位置，实现相对偏移
+  double? arrowOffset = 0;
 
   late Offset _position; // 气泡左上角的位置，以屏幕左上角为原点
 
@@ -44,18 +55,23 @@ class CustomPopupWindow {
     required this.height,
     required this.width,
     required this.backgroundColor,
+    this.arrowOffset,
     this.arrowColor,
     this.arrowHeight,
     this.arrowWidth}) {
     arrowHeight ??= 6;
     arrowWidth ??= 10;
     arrowColor ??= backgroundColor;
+    arrowOffset ??= 0;
   }
 
-  OverlayEntry? show({Rect? rect, GlobalKey? widgetKey}) {
-    assert(rect != null || widgetKey != null);
+  /// 展示气泡
+  /// [targetRect] 目标widget所在区域
+  /// [targetGlobalKey] 目标widget的[GlobalKey]
+  OverlayEntry? show({Rect? targetRect, GlobalKey? targetGlobalKey}) {
+    assert(targetRect != null || targetGlobalKey != null);
 
-    targetWidgetRect = rect ?? CustomPopupWindow.getWidgetGlobalRect(widgetKey!);
+    targetWidgetRect = targetRect ?? CustomPopupWindow.getWidgetGlobalRect(targetGlobalKey!);
     if(targetWidgetRect == null) {
       return null;
     }
@@ -72,9 +88,10 @@ class CustomPopupWindow {
     return _entry;
   }
 
-  /// 计算气泡在屏幕的位置
+  /// 计算气泡在屏幕中的位置
   void calculatePosition(BuildContext context) {
-    double dx = targetWidgetRect!.left + targetWidgetRect!.width / 2 - width / 2;
+    // arrowOffset 箭头向左为负值，气泡整体右移动
+    double dx = targetWidgetRect!.left + targetWidgetRect!.width / 2 - width / 2 - arrowOffset!;
     // 确定x轴位置
     if(dx < 10) { // 保持10的安全间距
       dx = 10;
@@ -93,10 +110,11 @@ class CustomPopupWindow {
     }
     _position = Offset(dx, dy);
 
-    debugPrint("dx = $dx + , dy = $dy");
+    debugPrint(logTAG + "dx = $dx , dy = $dy");
 
   }
 
+  /// 获取某个组件在屏幕中的区域
   static Rect getWidgetGlobalRect(GlobalKey key) {
     RenderBox renderBox = key.currentContext!.findRenderObject() as RenderBox;
     var offset = renderBox.localToGlobal(Offset.zero);
@@ -106,6 +124,7 @@ class CustomPopupWindow {
 
   void dismiss() {
     _entry?.remove();
+    _entry = null;
   }
 
   LayoutBuilder buildPopupWindLayout(Offset position) {
@@ -139,6 +158,4 @@ class CustomPopupWindow {
       );
     });
   }
-
-
 }

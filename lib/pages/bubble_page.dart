@@ -36,6 +36,7 @@ class BubblePageState extends State<BubblePage> {
     var popTips = CustomPopupWindow(
         context: context,
         alignment: PopAlignment.down,
+        arrowOffset: -30,
         child: Container(
           height: 30,
           width: 100,
@@ -71,7 +72,7 @@ class BubblePageState extends State<BubblePage> {
 
               GestureDetector(
                   onTap: () {
-                    popEntry = popTips.show(widgetKey: targetKey2);
+                    popEntry = popTips.show(targetGlobalKey: targetKey2);
                   },
                   child: Text("气泡2", key: targetKey2, style: const TextStyle(color: Colors.black54, fontSize: 24),)),
             ],
