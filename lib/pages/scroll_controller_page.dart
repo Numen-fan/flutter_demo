@@ -47,13 +47,18 @@ class ScrollControllerPageState extends State<ScrollControllerTestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("ScrollControllerTestPage"),),
-      body: Scrollbar(
-        child: ListView.builder(
-          itemCount: 100,
-          controller: _scrollController,
-          itemBuilder: (BuildContext context, int index) {
-            return ListTile(title: Text("$index"),);
-          },
+      body: WillPopScope(
+        onWillPop: () async {
+          return false;
+        },
+        child: Scrollbar(
+          child: ListView.builder(
+            itemCount: 100,
+            controller: _scrollController,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(title: Text("$index"),);
+            },
+          ),
         ),
       ),
       floatingActionButton: !showToTopBtn

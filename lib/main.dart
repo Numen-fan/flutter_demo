@@ -2,6 +2,7 @@ import 'package:counter_flutter_demo/entity/route_data.dart';
 import 'package:counter_flutter_demo/pages/bottom_navigator_page.dart';
 import 'package:counter_flutter_demo/pages/bubble_page.dart';
 import 'package:counter_flutter_demo/pages/http_request_page.dart';
+import 'package:counter_flutter_demo/pages/dialog_page.dart';
 import 'package:counter_flutter_demo/pages/tv_demo.dart';
 import 'package:counter_flutter_demo/provider/cart_provider_page.dart';
 import 'package:counter_flutter_demo/pages/form_test_route.dart';
@@ -17,15 +18,16 @@ import 'package:counter_flutter_demo/redux_app.dart';
 import 'package:counter_flutter_demo/scoped_model_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 
 import 'generated/l10n.dart';
 
+@pragma('vm:entry-point')
 void main() {
-
   /// normal
-  runApp(const MyApp());
+  runApp(MyApp());
 
   /// Scoped model
   // runApp(const ScopedModelApp());
@@ -58,11 +60,23 @@ void main() {
 
 // StatelessWidget表示没有状态的组件
 class MyApp extends StatelessWidget {
-  const MyApp({Key? appKey}) : super(key: appKey); // 注意这里是可选命名参数的调用
+  MyApp({Key? appKey}) : super(key: appKey); // 注意这里是可选命名参数的调用
+
+  var channel = const BasicMessageChannel("com.basic.message.channel", StandardMessageCodec());
+
+
+  Future<Object?> _handleNativeMessage(Object? message) async {
+    print(message);
+  }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    channel.setMessageHandler(_handleNativeMessage);
+
+    channel.send("你好，我是flutter");
+
     return MaterialApp(
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
@@ -92,6 +106,7 @@ class MyApp extends StatelessWidget {
         BubblePage.routeName: (_) => const BubblePage(),
         HttpRequestPage.routeName: (_) => const HttpRequestPage(),
         BottomNavigatorPage.routeName: (_) => const BottomNavigatorPage(),
+        DialogPage.routeName: (_) => const DialogPage()
       }, // 命名路由
 
       // onGenerateRoute: (RouteSettings settings) {
