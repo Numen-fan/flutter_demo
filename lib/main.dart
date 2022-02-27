@@ -1,4 +1,5 @@
 import 'package:counter_flutter_demo/entity/route_data.dart';
+import 'package:counter_flutter_demo/pages/bottom_navigator_page.dart';
 import 'package:counter_flutter_demo/pages/bubble_page.dart';
 import 'package:counter_flutter_demo/pages/http_request_page.dart';
 import 'package:counter_flutter_demo/pages/tv_demo.dart';
@@ -90,6 +91,7 @@ class MyApp extends StatelessWidget {
         TvDemoPage.routeName: (_) => const TvDemoPage(),
         BubblePage.routeName: (_) => const BubblePage(),
         HttpRequestPage.routeName: (_) => const HttpRequestPage(),
+        BottomNavigatorPage.routeName: (_) => const BottomNavigatorPage(),
       }, // 命名路由
 
       // onGenerateRoute: (RouteSettings settings) {

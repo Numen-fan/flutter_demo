@@ -1,3 +1,4 @@
+import 'package:counter_flutter_demo/pages/bottom_navigator_page.dart';
 import 'package:counter_flutter_demo/pages/bubble_page.dart';
 import 'package:counter_flutter_demo/pages/form_test_route.dart';
 import 'package:counter_flutter_demo/pages/home_page.dart';
@@ -7,7 +8,7 @@ import 'package:counter_flutter_demo/pages/tv_demo.dart';
 import 'package:counter_flutter_demo/provider/cart_provider_page.dart';
 import 'package:counter_flutter_demo/provider_new/provider_selector_page.dart';
 
-/// 路由数据
+/// 路由数据, 供首页页面选择跳转使用
 class RouteData {
 
   final String title;
@@ -23,6 +24,7 @@ class RouteData {
     RouteData("Provider selector page", ProviderSelectorPage.routeName),
     RouteData("Tv Demo", TvDemoPage.routeName),
     RouteData("Bubble Demo", BubblePage.routeName),
-    RouteData("HttpClient page", HttpRequestPage.routeName)
+    RouteData("HttpClient page", HttpRequestPage.routeName),
+    RouteData("Bottom navigator page", BottomNavigatorPage.routeName)
   ];
 }
