@@ -30,6 +30,8 @@ class _CartProviderRouteState extends State<CartProviderRoute> {
           builder: (context) {
             print("Builder 1"); // 点击按钮，这里不会执行，因此根Widget不会重新构建
             return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 // 使用方法1
                 // 这个builder中依赖了ChangeNotifierProvider，所以数据发生变化时就会进行重建
@@ -54,6 +56,22 @@ class _CartProviderRouteState extends State<CartProviderRoute> {
                       },
                       child: const Text("Add"));
                 }),
+
+                const SizedBox(
+                  height: 30,
+                ),
+
+                Row (
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Image(
+                      image: AssetImage("images/logo.jpg"),
+                      width: 20,
+                    ),
+                    SizedBox(width: 10,),
+                    Text("筛窦阿斯达黑色垃圾ksjdfhsjdfsjd是否合适绝地逢生几点司法鉴定发", maxLines: 1, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,)
+                  ],
+                )
               ],
             );
           },
