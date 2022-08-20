@@ -64,7 +64,6 @@ class MyApp extends StatelessWidget {
 
   var channel = const BasicMessageChannel("com.basic.message.channel", StandardMessageCodec());
 
-
   Future<Object?> _handleNativeMessage(Object? message) async {
     print(message);
   }
