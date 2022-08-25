@@ -49,7 +49,7 @@ class ScrollControllerPageState extends State<ScrollControllerTestPage> {
       appBar: AppBar(title: const Text("ScrollControllerTestPage"),),
       body: WillPopScope(
         onWillPop: () async {
-          return false;
+          return true;
         },
         child: Scrollbar(
           child: ListView.builder(

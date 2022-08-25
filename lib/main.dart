@@ -94,32 +94,56 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // 注册路由表
-      routes: <String, WidgetBuilder>{
-        "/": (context) => const NewHomePage(), // 首页路由
-        FormTestPage.routeName: (context) => const FormTestPage(),
-        MyHomePage.routeName: (context) => const MyHomePage(title: ""),
-        ScrollControllerTestPage.routeName: (context) => const ScrollControllerTestPage(),
-        CartProviderRoute.routName: (context) => const CartProviderRoute(),
-        ProviderSelectorPage.routeName: (context) => const ProviderSelectorPage(),
-        TvDemoPage.routeName: (_) => const TvDemoPage(),
-        BubblePage.routeName: (_) => const BubblePage(),
-        HttpRequestPage.routeName: (_) => const HttpRequestPage(),
-        BottomNavigatorPage.routeName: (_) => const BottomNavigatorPage(),
-        DialogPage.routeName: (_) => const DialogPage()
-      }, // 命名路由
+      // routes: <String, WidgetBuilder>{
+      //   "/": (context) => const NewHomePage(), // 首页路由
+      //   FormTestPage.routeName: (context) => const FormTestPage(),
+      //   MyHomePage.routeName: (context) => const MyHomePage(title: ""),
+      //   ScrollControllerTestPage.routeName: (context) => const ScrollControllerTestPage(),
+      //   CartProviderRoute.routName: (context) => const CartProviderRoute(),
+      //   ProviderSelectorPage.routeName: (context) => const ProviderSelectorPage(),
+      //   TvDemoPage.routeName: (_) => const TvDemoPage(),
+      //   BubblePage.routeName: (_) => const BubblePage(),
+      //   HttpRequestPage.routeName: (_) => const HttpRequestPage(),
+      //   BottomNavigatorPage.routeName: (_) => const BottomNavigatorPage(),
+      //   DialogPage.routeName: (_) => const DialogPage()
+      // }, // 命名路由
 
-      // onGenerateRoute: (RouteSettings settings) {
-      //   return MaterialPageRoute(builder: (context) {
-      //     String routeName = settings.name ?? ""; // 这里设计不合理啊
-      //     // 如果访问的路由页需要登录，但当前未登录，则直接返回登录页路由，
-      //     // 引导用户登录；其它情况则正常打开路由
-      //     // 通过命名路由打开页面
-      //     return const NewRoute();
-      //   });
-      // },
-
-      // home: const MyHomePage(title: 'Flutter Demo Home Page'), // home表示主页
-      // home: const Counter(),
+      // 可以通过在route中携带参数
+      onGenerateRoute: (RouteSettings settings) {
+        // 应该把case放到前面，返回不同类型的Route
+        return MaterialPageRoute(
+          builder: (context) {
+            String routeName = settings.name ?? ""; // 这里设计不合理啊
+            // 如果访问的路由页需要登录，但当前未登录，则直接返回登录页路由，
+            // 引导用户登录；其它情况则正常打开路由
+            // 通过命名路由打开页面
+            Widget route = const NewHomePage(); // 默认主页
+            switch(routeName) {
+              case FormTestPage.routeName:
+                return const FormTestPage();
+              case MyHomePage.routeName:
+                return const MyHomePage(title: "");
+              case ScrollControllerTestPage.routeName:
+                return const ScrollControllerTestPage();
+              case CartProviderRoute.routName:
+                return const CartProviderRoute();
+              case ProviderSelectorPage.routeName:
+                return const ProviderSelectorPage();
+              case TvDemoPage.routeName:
+                return const TvDemoPage();
+              case BubblePage.routeName:
+                return const BubblePage();
+              case HttpRequestPage.routeName:
+                return const HttpRequestPage();
+              case BottomNavigatorPage.routeName:
+                return const BottomNavigatorPage();
+              case DialogPage.routeName:
+                return const DialogPage();
+            }
+            return route;
+          },
+        );
+      },
     );
   }
 }
