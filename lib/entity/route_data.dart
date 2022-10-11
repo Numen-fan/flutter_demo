@@ -1,3 +1,5 @@
+import 'package:counter_flutter_demo/module/StudyDemo/study_demo_main.dart';
+import 'package:counter_flutter_demo/module/grouplist/member_list.dart';
 import 'package:counter_flutter_demo/pages/bottom_navigator_page.dart';
 import 'package:counter_flutter_demo/pages/bubble_page.dart';
 import 'package:counter_flutter_demo/pages/dialog_page.dart';
@@ -27,6 +29,8 @@ class RouteData {
     RouteData("Bubble Demo", BubblePage.routeName),
     RouteData("HttpClient page", HttpRequestPage.routeName),
     RouteData("Bottom navigator page", BottomNavigatorPage.routeName),
-    RouteData("Dialog Demo", DialogPage.routeName)
+    RouteData("MemberList", MemberListPage.route),
+    RouteData("Provider", StudyDemoMainPage.route),
+    RouteData("Dialog Demo", DialogPage.routeName),
   ];
 }

@@ -1,4 +1,5 @@
-import 'package:counter_flutter_demo/entity/route_data.dart';
+import 'package:counter_flutter_demo/module/StudyDemo/study_demo_main.dart';
+import 'package:counter_flutter_demo/module/grouplist/member_list.dart';
 import 'package:counter_flutter_demo/pages/bottom_navigator_page.dart';
 import 'package:counter_flutter_demo/pages/bubble_page.dart';
 import 'package:counter_flutter_demo/pages/http_request_page.dart';
@@ -7,20 +8,13 @@ import 'package:counter_flutter_demo/pages/tv_demo.dart';
 import 'package:counter_flutter_demo/provider/cart_provider_page.dart';
 import 'package:counter_flutter_demo/pages/form_test_route.dart';
 import 'package:counter_flutter_demo/pages/new_home_page.dart';
-import 'package:counter_flutter_demo/pages/new_route_page.dart';
 import 'package:counter_flutter_demo/pages/home_page.dart';
 import 'package:counter_flutter_demo/pages/scroll_controller_page.dart';
-import 'package:counter_flutter_demo/provider_app.dart';
 import 'package:counter_flutter_demo/provider_new/counter_provider_model.dart';
 import 'package:counter_flutter_demo/provider_new/provider_selector_page.dart';
-import 'package:counter_flutter_demo/redux/counter_state.dart';
-import 'package:counter_flutter_demo/redux_app.dart';
-import 'package:counter_flutter_demo/scoped_model_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:redux/redux.dart';
 
 import 'generated/l10n.dart';
 
@@ -93,20 +87,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // 注册路由表
-      // routes: <String, WidgetBuilder>{
-      //   "/": (context) => const NewHomePage(), // 首页路由
-      //   FormTestPage.routeName: (context) => const FormTestPage(),
-      //   MyHomePage.routeName: (context) => const MyHomePage(title: ""),
-      //   ScrollControllerTestPage.routeName: (context) => const ScrollControllerTestPage(),
-      //   CartProviderRoute.routName: (context) => const CartProviderRoute(),
-      //   ProviderSelectorPage.routeName: (context) => const ProviderSelectorPage(),
-      //   TvDemoPage.routeName: (_) => const TvDemoPage(),
-      //   BubblePage.routeName: (_) => const BubblePage(),
-      //   HttpRequestPage.routeName: (_) => const HttpRequestPage(),
-      //   BottomNavigatorPage.routeName: (_) => const BottomNavigatorPage(),
-      //   DialogPage.routeName: (_) => const DialogPage()
-      // }, // 命名路由
 
       // 可以通过在route中携带参数
       onGenerateRoute: (RouteSettings settings) {
@@ -139,6 +119,10 @@ class MyApp extends StatelessWidget {
                 return const BottomNavigatorPage();
               case DialogPage.routeName:
                 return const DialogPage();
+              case MemberListPage.route:
+                return const MemberListPage();
+              case StudyDemoMainPage.route:
+                return const StudyDemoMainPage();
             }
             return route;
           },
