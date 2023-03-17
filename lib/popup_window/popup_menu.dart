@@ -17,14 +17,14 @@ abstract class MenuItemProvider {
   TextAlign get menuTextAlign;
 }
 
-class MenuItem extends MenuItemProvider {
+class MyMenuItem extends MenuItemProvider {
   Widget? image; // 图标名称
   String title; // 菜单标题
   var userInfo; // 额外的菜单荐信息
   TextStyle textStyle;
   TextAlign textAlign;
 
-  MenuItem(
+  MyMenuItem(
       {this.title = "",
       this.image,
       this.userInfo,

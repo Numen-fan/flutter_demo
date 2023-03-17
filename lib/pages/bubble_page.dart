@@ -29,7 +29,7 @@ class BubblePageState extends State<BubblePage> {
         context: context,
         backgroundColor: Colors.blue,
         items: [
-          MenuItem(title: "当前是增强会议", textStyle: const TextStyle(color: Colors.white), textAlign: TextAlign.center),
+          MyMenuItem(title: "当前是增强会议", textStyle: const TextStyle(color: Colors.white), textAlign: TextAlign.center),
         ],
     );
 

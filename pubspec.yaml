@@ -50,6 +50,7 @@ dependencies:
   flutter_svg: ^1.0.0
   path_provider: ^2.0.8
   dio: ^4.0.5-beta1
+  sticky_headers: "^0.3.0"
 
 dev_dependencies:
   flutter_test:

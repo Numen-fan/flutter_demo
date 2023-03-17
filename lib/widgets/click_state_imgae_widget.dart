@@ -1,4 +1,4 @@
-import 'package:counter_flutter_demo/util/ImageLoader.dart';
+import 'package:counter_flutter_demo/util/image_loader.dart';
 import 'package:flutter/cupertino.dart';
 
 /// A Image Widget show different picture when Tap down and Tap up

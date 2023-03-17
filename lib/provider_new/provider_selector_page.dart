@@ -19,28 +19,26 @@ class ProviderSelectorPage extends StatelessWidget {
         appBar: AppBar(
           title: const Text("Provider Selector Page"),
         ),
-        body: Selector<ProductModel, ProductModel>(
-          shouldRebuild: (preProvider, curProvider) {
-            debugPrint("Get change event, should rebuild = ${curProvider.shouldRebuild}");
-            return curProvider.shouldRebuild; // 长度不等时，进行列表的刷新
+        body: Selector<ProductModel, List<Product>>(
+          shouldRebuild: (preItems, items) { 
+            debugPrint("Get change event, should rebuild ${ preItems.length != items.length}");
+            return preItems.length != items.length; // 长度不等时，进行列表的刷新
           },
-          selector: (context, provider) => provider,
-          builder: (context, provider, child) {
+          selector: (context, provider) => provider.products,
+
+          builder: (context, items, _) {
             debugPrint("Rebuild the list");
             return ListView.builder(
-                itemCount: provider.total,
+                itemCount: items.length,
                 itemBuilder: (context, index) {
                   return Selector<ProductModel, Product>(
-                    shouldRebuild: (preProduct, curProduct) {
-                      return preProduct != curProduct;
-                    },
-                    selector: (context, product) => provider.products[index],
+                    selector: (context, product) => items[index],
                     builder: (context, product, child) {
                       debugPrint("Rebuild the item $index");
                       return ListTile(
                         title: Text(product.name),
                         trailing: GestureDetector(
-                          onTap: () => provider.collect(index),
+                          onTap: () => context.read<ProductModel>().collect(index),
                           child: Icon(
                               product.collect ? Icons.star : Icons.star_border),
                         ),

@@ -1,3 +1,4 @@
+import 'package:counter_flutter_demo/listview/custom_list_view_page.dart';
 import 'package:counter_flutter_demo/module/StudyDemo/study_demo_main.dart';
 import 'package:counter_flutter_demo/module/grouplist/member_list.dart';
 import 'package:counter_flutter_demo/pages/bottom_navigator_page.dart';
@@ -109,6 +110,8 @@ class MyApp extends StatelessWidget {
                 return const CartProviderRoute();
               case ProviderSelectorPage.routeName:
                 return const ProviderSelectorPage();
+              case CustomListViewPage.routeName:
+                return const CustomListViewPage();
               case TvDemoPage.routeName:
                 return const TvDemoPage();
               case BubblePage.routeName:

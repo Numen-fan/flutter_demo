@@ -7,8 +7,8 @@ class ProductModel extends ChangeNotifier {
     debugPrint("Create instance of ProductModel");
   }
 
-  final List<Product> _products =
-      List.generate(10, (index) => Product("Product $index"));
+  List<Product> _products =
+      List.generate(10, (index) => Product("Product ${index}"));
 
   bool shouldRebuild = false;
 
@@ -27,8 +27,9 @@ class ProductModel extends ChangeNotifier {
   /// Add new Product to [_products]
   void addProduct() {
     debugPrint("User add new product");
-    _products.add(Product("Product $total"));
-    notify(true);
+    _products.add(Product("Product ${total + 1}"));
+    _products = [..._products];
+    notifyListeners();
   }
 
   /// Notify the listener
