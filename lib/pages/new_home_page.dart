@@ -25,7 +25,7 @@ class NewHomePage extends StatelessWidget {
             RouteData item = RouteData.routes[index];
             return GestureDetector(
               onTap: () => Navigator.of(context).pushNamed(item.route),
-              child: ListTile(title: Text(item.title)),
+              child: ListTile(title: Text(item.title,)),
             );
           }),
     );
