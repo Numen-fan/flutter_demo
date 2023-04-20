@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 /// Created by fanjiajia02 on 2023/4/19
@@ -5,26 +7,40 @@ import 'package:flutter/material.dart';
 
 class HexagonPainter extends CustomPainter {
 
+  final Color color;
+  final double strokeWidth;
+  final bool fill; // 是否填充
+
+  HexagonPainter(this.color, this.strokeWidth, {this.fill = false});
+
 
   @override
   void paint(Canvas canvas, Size size) {
-    print("paint");
     var paint = Paint()
-      ..color = Colors.blueAccent
+      ..color = color
+      ..strokeWidth = strokeWidth
       ..isAntiAlias = true
-      ..strokeWidth = 2.0
-      ..style = PaintingStyle.stroke;
+      ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke
+      ..strokeJoin = StrokeJoin.round;
 
+    var radius = (size.width - strokeWidth) / 2; // 将正六边形看做圆的内切，stroke会占据一部分空间
     var path = Path();
-    path.moveTo(0, 10);
-    path.lineTo(5.5, 0);
-    path.lineTo(17.5, 0);
-    path.lineTo(23, 10);
-    path.lineTo(17.5, 20);
-    path.lineTo(5.5, 20);
-    path.lineTo(0, 10);
+    var angle = 2 * pi / 6; // 60度旋转单位
+
+    var centerX = radius;
+    var centerY = radius;
+    var sideLength = radius; // 六边形边长
+
+    path.moveTo(centerX + sideLength * cos(0), centerY + sideLength * sin(0));
+
+    for (var i = 1; i <= 6; i++) {
+      path.lineTo(centerX + sideLength * cos(angle * i),
+          centerY + sideLength * sin(angle * i));
+    }
+    path.close();
 
     canvas.drawPath(path, paint);
+
   }
 
   @override
