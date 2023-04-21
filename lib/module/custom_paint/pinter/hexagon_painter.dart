@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
@@ -10,8 +11,10 @@ class HexagonPainter extends CustomPainter {
   final Color color;
   final double strokeWidth;
   final bool fill; // 是否填充
+  bool gradient;
+  List<Color>? gradientColors;
 
-  HexagonPainter(this.color, this.strokeWidth, {this.fill = false});
+  HexagonPainter(this.color, this.strokeWidth, {this.fill = false, this.gradient = false, this.gradientColors});
 
 
   @override
@@ -21,6 +24,7 @@ class HexagonPainter extends CustomPainter {
       ..strokeWidth = strokeWidth
       ..isAntiAlias = true
       ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke
+      ..shader = gradient ? ui.Gradient.linear(const Offset(0,0), Offset(size.width, size.height), gradientColors!): null
       ..strokeJoin = StrokeJoin.round;
 
     var radius = (size.width - strokeWidth) / 2; // 将正六边形看做圆的内切，stroke会占据一部分空间

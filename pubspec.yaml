@@ -54,6 +54,8 @@ dependencies:
   sticky_headers: "^0.3.0"
   shared_preferences: 2.0.20
   lottie: 2.3.2
+  # 滑动弹窗
+  sliding_up_panel: 2.0.0
 
 dev_dependencies:
   flutter_test:

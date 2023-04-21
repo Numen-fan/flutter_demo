@@ -1,3 +1,4 @@
+import 'dart:ui' as ui;
 import 'package:flutter/cupertino.dart';
 
 /// Created by fanjiajia02 on 2023/4/20
@@ -8,8 +9,10 @@ class SquarePainter extends CustomPainter {
   final Color color;
   final double strokeWidth;
   final bool fill; // 是否填充
+  bool gradient;
+  List<Color>? gradientColors;
 
-  SquarePainter(this.color, this.strokeWidth, {this.fill = false});
+  SquarePainter(this.color, this.strokeWidth, {this.fill = false, this.gradient = false, this.gradientColors});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -22,6 +25,7 @@ class SquarePainter extends CustomPainter {
       ..strokeWidth = strokeWidth
       ..isAntiAlias = true
       ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke
+      ..shader = gradient ? ui.Gradient.linear(const Offset(0,0), Offset(size.width, size.height), gradientColors!): null
       ..strokeJoin = StrokeJoin.round;
     canvas.drawRect(rect, paint);
   }

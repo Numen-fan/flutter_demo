@@ -1,6 +1,4 @@
-import 'dart:math';
-import 'dart:typed_data';
-import 'dart:ui';
+import 'dart:ui' as ui;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +9,10 @@ class LinePainter extends CustomPainter {
 
   final Color color;
   final double strokeWidth;
+  bool gradient;
+  List<Color>? gradientColors;
 
-  LinePainter(this.color, this.strokeWidth);
+  LinePainter(this.color, this.strokeWidth, {this.gradient = false, this.gradientColors});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -21,6 +21,7 @@ class LinePainter extends CustomPainter {
     var paint = Paint()
       ..color = color
       ..strokeWidth = strokeWidth
+      ..shader = gradient ? ui.Gradient.linear(const Offset(0,0), Offset(size.width, size.height), gradientColors!): null
       ..isAntiAlias = true;
 
     RRect rect = RRect.fromLTRBR(0, width / 2 - strokeWidth / 2, width, width / 2 + strokeWidth / 2,

@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui' as ui;
 
 import 'package:flutter/cupertino.dart';
 
@@ -9,8 +10,10 @@ class ArrowPainter extends CustomPainter {
 
   final Color color;
   final double strokeWidth;
+  bool gradient;
+  List<Color>? gradientColors;
 
-  ArrowPainter(this.color, this.strokeWidth);
+  ArrowPainter(this.color, this.strokeWidth, {this.gradient = false, this.gradientColors});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -19,6 +22,7 @@ class ArrowPainter extends CustomPainter {
       ..color = color
       ..strokeWidth = strokeWidth
       ..isAntiAlias = true
+      ..shader = gradient ? ui.Gradient.linear(const Offset(0,0), Offset(size.width, size.height), gradientColors!): null
       ..style =PaintingStyle.fill;
 
 
