@@ -1,4 +1,4 @@
-import 'package:counter_flutter_demo/module/StudyDemo/custom_model.dart';
+import 'package:flutter_demo/module/StudyDemo/custom_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 

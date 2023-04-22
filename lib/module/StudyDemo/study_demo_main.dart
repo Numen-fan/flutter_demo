@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:counter_flutter_demo/module/StudyDemo/custom_model.dart';
-import 'package:counter_flutter_demo/module/StudyDemo/custom_widget.dart';
+import 'package:flutter_demo/module/StudyDemo/custom_model.dart';
+import 'package:flutter_demo/module/StudyDemo/custom_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

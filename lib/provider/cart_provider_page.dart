@@ -1,7 +1,7 @@
-import 'package:counter_flutter_demo/provider/cart_item.dart';
-import 'package:counter_flutter_demo/provider/cart_model.dart';
-import 'package:counter_flutter_demo/provider/change_notifier_provider.dart';
-import 'package:counter_flutter_demo/provider/consumer.dart';
+import 'package:flutter_demo/provider/cart_item.dart';
+import 'package:flutter_demo/provider/cart_model.dart';
+import 'package:flutter_demo/provider/change_notifier_provider.dart';
+import 'package:flutter_demo/provider/consumer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

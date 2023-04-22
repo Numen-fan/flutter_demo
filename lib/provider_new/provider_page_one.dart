@@ -1,5 +1,5 @@
-import 'package:counter_flutter_demo/provider_new/counter_provider_model.dart';
-import 'package:counter_flutter_demo/provider_new/provider_page_two.dart';
+import 'package:flutter_demo/provider_new/counter_provider_model.dart';
+import 'package:flutter_demo/provider_new/provider_page_two.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

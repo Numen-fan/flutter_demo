@@ -1,6 +1,6 @@
-import 'package:counter_flutter_demo/module/custom_paint/pinter/circle_painter.dart';
-import 'package:counter_flutter_demo/module/custom_paint/shape_widget.dart';
-import 'package:counter_flutter_demo/module/custom_paint/whiteboard_selector_panel_view_model.dart';
+import 'package:flutter_demo/module/custom_paint/pinter/circle_painter.dart';
+import 'package:flutter_demo/module/custom_paint/shape_widget.dart';
+import 'package:flutter_demo/module/custom_paint/whiteboard_selector_panel_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -1,7 +1,7 @@
 import 'dart:core';
 import 'dart:ui';
 
-import 'package:counter_flutter_demo/popup_window/triangle_painter.dart';
+import 'package:flutter_demo/popup_window/triangle_painter.dart';
 import 'package:flutter/material.dart';
 
 /// 自定义气泡window

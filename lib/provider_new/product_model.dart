@@ -1,4 +1,4 @@
-import 'package:counter_flutter_demo/entity/product.dart';
+import 'package:flutter_demo/entity/product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

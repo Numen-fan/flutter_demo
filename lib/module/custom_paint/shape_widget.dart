@@ -7,12 +7,15 @@ class ShapeWidget extends StatelessWidget {
 
   final CustomPainter painter;
 
-  const ShapeWidget(this.painter, {Key? key}) : super(key: key);
+  final double width;
+  final double height;
+
+  const ShapeWidget(this.painter, {Key? key, this.width = 23, this.height = 23}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      size: const Size(23, 23),
+      size: Size(width, height),
       painter: painter,
     );
   }

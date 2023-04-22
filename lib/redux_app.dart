@@ -1,5 +1,5 @@
-import 'package:counter_flutter_demo/redux/redux_page_one.dart';
-import 'package:counter_flutter_demo/redux/counter_state.dart';
+import 'package:flutter_demo/redux/redux_page_one.dart';
+import 'package:flutter_demo/redux/counter_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';

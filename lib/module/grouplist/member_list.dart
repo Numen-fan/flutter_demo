@@ -1,6 +1,6 @@
-import 'package:counter_flutter_demo/extension/int_extension.dart';
-import 'package:counter_flutter_demo/module/grouplist/member_info_item.dart';
-import 'package:counter_flutter_demo/util/utils.dart';
+import 'package:flutter_demo/extension/int_extension.dart';
+import 'package:flutter_demo/module/grouplist/member_info_item.dart';
+import 'package:flutter_demo/util/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../util/adapt.dart';

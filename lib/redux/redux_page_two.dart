@@ -1,4 +1,4 @@
-import 'package:counter_flutter_demo/redux/counter_state.dart' as counter_state;
+import 'package:flutter_demo/redux/counter_state.dart' as counter_state;
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 

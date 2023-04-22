@@ -1,4 +1,4 @@
-import 'package:counter_flutter_demo/provider/change_notifier_provider.dart';
+import 'package:flutter_demo/provider/change_notifier_provider.dart';
 import 'package:flutter/material.dart';
 
 class Consumer<T> extends StatelessWidget {

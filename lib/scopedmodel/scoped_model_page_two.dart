@@ -1,5 +1,5 @@
-import 'package:counter_flutter_demo/scopedmodel/counter_model.dart';
-import 'package:counter_flutter_demo/scopedmodel/scoped_model_page_one.dart';
+import 'package:flutter_demo/scopedmodel/counter_model.dart';
+import 'package:flutter_demo/scopedmodel/scoped_model_page_one.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 

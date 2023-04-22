@@ -1,5 +1,5 @@
-import 'package:counter_flutter_demo/module/theme/theme_view_model.dart';
-import 'package:counter_flutter_demo/util/share_preference_utils.dart';
+import 'package:flutter_demo/module/theme/theme_view_model.dart';
+import 'package:flutter_demo/util/share_preference_utils.dart';
 import 'package:flutter/material.dart';
 
 /// Created by fanjiajia02 on 2023/3/30

@@ -1,19 +1,19 @@
-import 'package:counter_flutter_demo/listview/custom_list_view_page.dart';
-import 'package:counter_flutter_demo/module/StudyDemo/study_demo_main.dart';
-import 'package:counter_flutter_demo/module/custom_paint/custom_painter_page.dart';
-import 'package:counter_flutter_demo/module/grouplist/member_list.dart';
-import 'package:counter_flutter_demo/module/theme/theme_page.dart';
-import 'package:counter_flutter_demo/pages/animation_page.dart';
-import 'package:counter_flutter_demo/pages/bottom_navigator_page.dart';
-import 'package:counter_flutter_demo/pages/bubble_page.dart';
-import 'package:counter_flutter_demo/pages/dialog_page.dart';
-import 'package:counter_flutter_demo/pages/form_test_route.dart';
-import 'package:counter_flutter_demo/pages/home_page.dart';
-import 'package:counter_flutter_demo/pages/http_request_page.dart';
-import 'package:counter_flutter_demo/pages/scroll_controller_page.dart';
-import 'package:counter_flutter_demo/pages/tv_demo.dart';
-import 'package:counter_flutter_demo/provider/cart_provider_page.dart';
-import 'package:counter_flutter_demo/provider_new/provider_selector_page.dart';
+import 'package:flutter_demo/listview/custom_list_view_page.dart';
+import 'package:flutter_demo/module/StudyDemo/study_demo_main.dart';
+import 'package:flutter_demo/module/custom_paint/custom_painter_page.dart';
+import 'package:flutter_demo/module/grouplist/member_list.dart';
+import 'package:flutter_demo/module/theme/theme_page.dart';
+import 'package:flutter_demo/pages/animation_page.dart';
+import 'package:flutter_demo/pages/bottom_navigator_page.dart';
+import 'package:flutter_demo/pages/bubble_page.dart';
+import 'package:flutter_demo/pages/dialog_page.dart';
+import 'package:flutter_demo/pages/form_test_route.dart';
+import 'package:flutter_demo/pages/home_page.dart';
+import 'package:flutter_demo/pages/http_request_page.dart';
+import 'package:flutter_demo/pages/scroll_controller_page.dart';
+import 'package:flutter_demo/pages/tv_demo.dart';
+import 'package:flutter_demo/provider/cart_provider_page.dart';
+import 'package:flutter_demo/provider_new/provider_selector_page.dart';
 import 'package:flutter/cupertino.dart';
 
 /// 路由数据, 供首页页面选择跳转使用

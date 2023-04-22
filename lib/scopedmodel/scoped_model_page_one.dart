@@ -1,4 +1,4 @@
-import 'package:counter_flutter_demo/scopedmodel/counter_model.dart';
+import 'package:flutter_demo/scopedmodel/counter_model.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 

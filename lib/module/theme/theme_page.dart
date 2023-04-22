@@ -1,4 +1,4 @@
-import 'package:counter_flutter_demo/module/theme/theme_view_model.dart';
+import 'package:flutter_demo/module/theme/theme_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

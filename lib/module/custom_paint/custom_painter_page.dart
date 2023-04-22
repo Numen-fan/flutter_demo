@@ -1,14 +1,15 @@
 import 'dart:math';
 
-import 'package:counter_flutter_demo/module/custom_paint/pinter/circle_painter.dart';
-import 'package:counter_flutter_demo/module/custom_paint/pinter/curve_painter.dart';
-import 'package:counter_flutter_demo/module/custom_paint/pinter/hexagon_painter.dart';
-import 'package:counter_flutter_demo/module/custom_paint/pinter/line_painter.dart';
-import 'package:counter_flutter_demo/module/custom_paint/pinter/triangle_painter.dart';
-import 'package:counter_flutter_demo/module/custom_paint/shape_widget.dart';
-import 'package:counter_flutter_demo/module/custom_paint/pinter/square_painter.dart';
-import 'package:counter_flutter_demo/module/custom_paint/white_board_control_panel_widget.dart';
-import 'package:counter_flutter_demo/module/custom_paint/whiteboard_selector_panel_view_model.dart';
+import 'package:flutter_demo/module/custom_paint/pinter/circle_painter.dart';
+import 'package:flutter_demo/module/custom_paint/pinter/color_selector_printer.dart';
+import 'package:flutter_demo/module/custom_paint/pinter/curve_painter.dart';
+import 'package:flutter_demo/module/custom_paint/pinter/hexagon_painter.dart';
+import 'package:flutter_demo/module/custom_paint/pinter/line_painter.dart';
+import 'package:flutter_demo/module/custom_paint/pinter/triangle_painter.dart';
+import 'package:flutter_demo/module/custom_paint/shape_widget.dart';
+import 'package:flutter_demo/module/custom_paint/pinter/square_painter.dart';
+import 'package:flutter_demo/module/custom_paint/white_board_control_panel_widget.dart';
+import 'package:flutter_demo/module/custom_paint/whiteboard_selector_panel_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +31,7 @@ class CustomPainterPage extends StatelessWidget {
       appBar: AppBar(title: Text("写写画画"),),
       body: ChangeNotifierProvider<WhiteBoardSelectorPanelViewModel>(
         create: (_) => WhiteBoardSelectorPanelViewModel(),
-        child: WhiteBoardControlPanelWidget(),
+        child: ShapeWidget(ColorSelectorPrinter(Colors.red, selected: true), width: 36, height: 36,),
       )
     );
   }

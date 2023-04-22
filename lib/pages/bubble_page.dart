@@ -1,5 +1,5 @@
-import 'package:counter_flutter_demo/popup_window/popup_menu.dart';
-import 'package:counter_flutter_demo/widgets/custom_popup_window.dart';
+import 'package:flutter_demo/popup_window/popup_menu.dart';
+import 'package:flutter_demo/widgets/custom_popup_window.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

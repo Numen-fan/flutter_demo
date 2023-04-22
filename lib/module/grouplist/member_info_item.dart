@@ -1,5 +1,5 @@
-import 'package:counter_flutter_demo/extension/int_extension.dart';
-import 'package:counter_flutter_demo/util/adapt.dart';
+import 'package:flutter_demo/extension/int_extension.dart';
+import 'package:flutter_demo/util/adapt.dart';
 import 'package:flutter/material.dart';
 
 class MemberInfoItemWidget extends StatefulWidget {

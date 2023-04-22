@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:counter_flutter_demo/provider/cart_item.dart';
+import 'package:flutter_demo/provider/cart_item.dart';
 import 'package:flutter/material.dart';
 
 /// 跨组件共享的model类，继承ChangeNotifier，作为事件发布者

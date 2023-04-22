@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './shopping_page_content.dart';
-import 'package:counter_flutter_demo/entity/product.dart';
+import 'package:flutter_demo/entity/product.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
