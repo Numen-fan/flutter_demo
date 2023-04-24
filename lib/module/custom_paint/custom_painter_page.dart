@@ -27,11 +27,16 @@ class CustomPainterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black12,
+      backgroundColor: Colors.grey,
       appBar: AppBar(title: Text("写写画画"),),
       body: ChangeNotifierProvider<WhiteBoardSelectorPanelViewModel>(
         create: (_) => WhiteBoardSelectorPanelViewModel(),
-        child: ShapeWidget(ColorSelectorPrinter(Colors.red, selected: true), width: 36, height: 36,),
+        child: Column(
+          children: [
+            Expanded(child: Container()),
+            WhiteBoardControlPanelWidget(),
+          ],
+        ),
       )
     );
   }

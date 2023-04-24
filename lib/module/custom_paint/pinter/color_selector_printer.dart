@@ -5,30 +5,39 @@ import 'package:flutter/material.dart';
 /// Desc: 颜色选择器
 
 class ColorSelectorPrinter extends CustomPainter {
-
   final Color color;
   final bool selected;
 
   ColorSelectorPrinter(this.color, {this.selected = false});
 
-
   @override
   void paint(Canvas canvas, Size size) {
-    var innerRadius = 13.0;
-    var outerRadius = 18.0 - 1;
+    var innerRadius = 12.0;
+    var outerRadius = 15.0;
     var width = size.width;
     var center = Offset(width / 2, width / 2);
 
     // 先画内部圆
-    canvas.drawCircle(center, innerRadius, Paint()..color = color..isAntiAlias = true..style = PaintingStyle.fill);
+    canvas.drawCircle(
+        center,
+        innerRadius,
+        Paint()
+          ..color = color
+          ..isAntiAlias = true
+          ..style = PaintingStyle.fill);
 
     if (selected) {
       // 画外圆
-      canvas.drawCircle(center, outerRadius, Paint()..color = Colors.blueAccent..style = PaintingStyle.stroke..strokeWidth = 2);
+      canvas.drawCircle(
+          center,
+          outerRadius,
+          Paint()
+            ..color = const Color(0xFF3377FF)
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 2);
     }
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-
 }

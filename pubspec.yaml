@@ -71,6 +71,7 @@ flutter:
   assets:
     - images/
     - images/live_cast/
+    - images/white_board/
 
   uses-material-design: true
 

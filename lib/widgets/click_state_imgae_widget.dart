@@ -68,11 +68,7 @@ class _ClickStateImageWidgetState extends State<ClickStateImageWidget> {
           widget.onClick!();
         }
       },
-      onDoubleTap: () {
-        if (widget.onDoubleClick != null) {
-          widget.onDoubleClick!();
-        }
-      },
+      onDoubleTap: widget.onDoubleClick,
       child: image,
     );
   }

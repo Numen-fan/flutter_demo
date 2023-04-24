@@ -19,5 +19,4 @@ class ShapeWidget extends StatelessWidget {
       painter: painter,
     );
   }
-
 }
