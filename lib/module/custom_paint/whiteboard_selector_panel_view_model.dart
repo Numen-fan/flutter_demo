@@ -6,6 +6,10 @@ import 'package:flutter_demo/module/custom_paint/entity/white_board_define.dart'
 /// Desc: ViewModel
 
 class WhiteBoardSelectorPanelViewModel extends ChangeNotifier {
+
+  // 默认画笔的颜色
+  late final Color defaultColor;
+
   // 是否展示颜色选择器
   bool showColorSelector = true;
 
@@ -14,7 +18,7 @@ class WhiteBoardSelectorPanelViewModel extends ChangeNotifier {
 
   /// 颜色选择器的颜色配置，key = 颜色，value = 是否选中，UI上每个颜色监听自己是否被选中
   /// 注意：统一在[setCurSelectColor]中修改是否选中
-  late final Map<Color, bool> selectColors;
+  late final Map<Color, bool> painterColors;
 
   /// 绘制工具选择器配置，key = 绘制工具，value = 是否选中
   late final Map<PainterType, bool> painterTypes;
@@ -35,27 +39,29 @@ class WhiteBoardSelectorPanelViewModel extends ChangeNotifier {
 
 
   WhiteBoardSelectorPanelViewModel() {
+    defaultColor = const Color(0xFFFF3A3A);
     // 初始化画笔颜色选择器的颜色
-    _initSelectColors();
+    _initPainterColors();
     // 初始化画笔类型信息
     _initPainterTypes();
   }
 
   /// 初始化颜色选择器的颜色
-  void _initSelectColors() {
-    selectColors = {};
-    selectColors[const Color(0xFF1A1C1F)] = false;
-    selectColors[const Color(0xFF808080)] = false;
-    selectColors[const Color(0xFFFF3A3A)] = true; // 默认选中红色
-    selectColors[const Color(0xFFFFBC0F)] = false;
-    selectColors[const Color(0xFF3CC745)] = false;
-    selectColors[const Color(0xFF0BD9A5)] = false;
-    selectColors[const Color(0xFF26B7FF)] = false;
-    selectColors[const Color(0xFF3377FF)] = false;
-    selectColors[const Color(0xFF974DFF)] = false;
+  void _initPainterColors() {
+    painterColors = {};
+    painterColors[const Color(0xFF1A1C1F)] = false;
+    painterColors[const Color(0xFF808080)] = false;
+    painterColors[const Color(0xFFFF3A3A)] = false;
+    painterColors[const Color(0xFFFFBC0F)] = false;
+    painterColors[const Color(0xFF3CC745)] = false;
+    painterColors[const Color(0xFF0BD9A5)] = false;
+    painterColors[const Color(0xFF26B7FF)] = false;
+    painterColors[const Color(0xFF3377FF)] = false;
+    painterColors[const Color(0xFF974DFF)] = false;
 
     // 默认选中的颜色
-    curPaintColor = const Color(0xFFFF3A3A);
+    curPaintColor = defaultColor;
+    painterColors[curPaintColor] = true;
   }
 
   void _initPainterTypes() {
@@ -85,15 +91,15 @@ class WhiteBoardSelectorPanelViewModel extends ChangeNotifier {
   /// 设置选中的颜色
   /// 第[index]个颜色
   void setCurSelectColor(int index) {
-    if (index > selectColors.length ||
-        selectColors.keys.elementAt(index) == curPaintColor) {
+    if (index < 0 || index > painterColors.length ||
+        painterColors.keys.elementAt(index) == curPaintColor) {
       return;
     }
     // 原来的颜色恢复未选中状态
-    selectColors[curPaintColor] = false;
-    curPaintColor = selectColors.keys.elementAt(index);
+    painterColors[curPaintColor] = false;
+    curPaintColor = painterColors.keys.elementAt(index);
     // 新颜色选中
-    selectColors[curPaintColor] = true;
+    painterColors[curPaintColor] = true;
     // 隐藏画笔宽度选择器
     showOrHideSizeSelector(false);
     notifyListeners();
@@ -101,9 +107,9 @@ class WhiteBoardSelectorPanelViewModel extends ChangeNotifier {
     _painterColorCacle[curPinterType] = curPaintColor;
   }
 
-  /// 设置选中的画笔类型
+  /// 设置选中的画笔
   void setCurSelectPainterType(int index) {
-    if (index > painterTypes.length ||
+    if (index < 0 || index > painterTypes.length ||
         painterTypes.keys.elementAt(index) == curPinterType) {
       return;
     }
@@ -115,6 +121,12 @@ class WhiteBoardSelectorPanelViewModel extends ChangeNotifier {
         curPinterType != PainterType.eraser;
     // 隐藏画笔宽度选择器
     showOrHideSizeSelector(false);
+
+    // 更换了画笔，恢复此前这个画笔的颜色
+    if(showColorSelector) {
+      var newPainterColor = _painterColorCacle[curPinterType] ?? defaultColor;
+      setCurSelectColor(painterColors.keys.toList().indexOf(newPainterColor));
+    }
     notifyListeners();
   }
 
@@ -138,6 +150,7 @@ class WhiteBoardSelectorPanelViewModel extends ChangeNotifier {
   }
 
   void setCurPainterSize(PainterSize painterSize) {
+    debugPrint("painterSize = $painterSize");
     _painterSizeCache[curPinterType] = painterSize;
     showOrHideSizeSelector(false); // 选择画笔宽度后，隐藏选择器
   }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_demo/module/custom_paint/entity/white_board_define.dart';
 import 'package:flutter_demo/module/custom_paint/pinter/arrow_painter.dart';
 import 'package:flutter_demo/module/custom_paint/pinter/circle_painter.dart';
@@ -48,7 +50,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
           decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.horizontal(
-                left: Radius.circular(10.0), right: Radius.circular(10.0)),
+                left: Radius.circular(8.0), right: Radius.circular(8.0)),
           ),
           child: Column(
             children: [
@@ -103,7 +105,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
                     child: SizedBox(
                       height: 32,
                       child: ListView.builder(
-                        itemCount: _viewModel.selectColors.length,
+                        itemCount: _viewModel.painterColors.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
                           return GestureDetector(
@@ -114,11 +116,11 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 8.0),
                                 child: Selector<WhiteBoardSelectorPanelViewModel, bool>(
-                                  selector: (context, model) => model.selectColors.values.elementAt(index),
+                                  selector: (context, model) => model.painterColors.values.elementAt(index),
                                   builder: (context, selected, _) {
                                     return ShapeWidget(
                                       ColorSelectorPrinter(
-                                          _viewModel.selectColors.keys.elementAt(index),
+                                          _viewModel.painterColors.keys.elementAt(index),
                                           selected: selected),
                                       width: 32,
                                       height: 32,
@@ -291,14 +293,20 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
             child: ListView.builder(
               itemCount: allSize.length,
               scrollDirection: Axis.horizontal,
-              itemExtent: 28,
+              itemExtent: 33,
+              shrinkWrap: true,
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: () { //这里根据下标索引size标识，省的再封装啥的
+                  onTap: () {
                     _viewModel.setCurPainterSize(allSize[index]);
                   },
-                  child: _getPainterSizeWidget(painterType, allSize[index],
-                      allSize[index] == curPainterSize),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: Center(
+                      child: _getPainterSizeWidget(painterType, allSize[index],
+                          allSize[index] == curPainterSize),
+                    ),
+                  ),
                 );
               },
             ),
@@ -317,19 +325,25 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
     switch(painterType) {
       case PainterType.pen:
       case PainterType.highlight:
-        _getPainterPenSizeWidget(painterSize, selected);
+      painterSizeWidget = _getPainterSizeForPenWidget(painterSize, selected);
         break;
       case PainterType.arrow:
+        painterSizeWidget = _getPainterSizeForArrowWidget(painterSize, selected);
         break;
       case PainterType.line:
+        painterSizeWidget = _getPainterSizeForLineWidget(painterSize, selected);
         break;
       case PainterType.square:
+        painterSizeWidget = _getPainterSizeForSquareWidget(painterSize, selected);
         break;
       case PainterType.hexagon:
+        painterSizeWidget = _getPainterSizeForHexagonWidget(painterSize, selected);
         break;
       case PainterType.triangle:
+        painterSizeWidget = _getPainterSizeForTriangleWidget(painterSize, selected);
         break;
       case PainterType.circle:
+        painterSizeWidget = _getPainterSizeForCircleWidget(painterSize, selected);
         break;
       default:
         break;
@@ -338,15 +352,44 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
   }
 
   /// 获取画笔和荧光笔的画笔尺寸
-  Widget _getPainterPenSizeWidget(PainterSize painterSize, bool selected) {
+  Widget _getPainterSizeForPenWidget(PainterSize painterSize, bool selected) {
     var size = _painterSizeCast(painterSize);
     var iconPath = getImagePath("icon_white_board_line_size_$size");
-    debugPrint("lallalal");
-    return Container(
-      width: 28,
-      height: 28,
-      color: Colors.yellow,
-    );
+    return SvgPicture.asset(iconPath, width: 28, height: 28, color: selected ? Colors.blue : null);
+  }
+
+  Widget _getPainterSizeForLineWidget(PainterSize painterSize, bool selected) {
+    var size = _painterSizeCast(painterSize);
+    return Transform.rotate(
+        key: ObjectKey("$painterSize$selected"),
+        angle: -pi / 4,
+        child: ShapeWidget(
+            LinePainter(selected ? Colors.blue : Colors.grey, size.toDouble())));
+  }
+
+  Widget _getPainterSizeForArrowWidget(PainterSize painterSize, bool selected) {
+    var size = _painterSizeCast(painterSize);
+    return Transform.rotate(
+      key: ObjectKey("$painterSize$selected"), //【关键】
+        angle: -pi / 4,
+        child: ShapeWidget(
+            ArrowPainter(selected ? Colors.blue : Colors.grey, size.toDouble())));
+  }
+
+  Widget _getPainterSizeForSquareWidget(PainterSize painterSize, bool selected) {
+    return Container();
+  }
+
+  Widget _getPainterSizeForHexagonWidget(PainterSize painterSize, bool selected) {
+    return Container();
+  }
+
+  Widget _getPainterSizeForTriangleWidget(PainterSize painterSize, bool selected) {
+    return Container();
+  }
+
+  Widget _getPainterSizeForCircleWidget(PainterSize painterSize, bool selected) {
+    return Container();
   }
 
   int _painterSizeCast(PainterSize painterSize) {
