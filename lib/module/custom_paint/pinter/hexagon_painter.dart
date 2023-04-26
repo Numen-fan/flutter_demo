@@ -27,13 +27,13 @@ class HexagonPainter extends CustomPainter {
       ..shader = gradient ? ui.Gradient.linear(const Offset(0,0), Offset(size.width, size.height), gradientColors!): null
       ..strokeJoin = StrokeJoin.round;
 
-    var radius = (size.width - strokeWidth) / 2; // 将正六边形看做圆的内切，stroke会占据一部分空间
+    var radius = size.width / 2; // 将正六边形看做圆的内切，stroke会占据一部分空间
     var path = Path();
     var angle = 2 * pi / 6; // 60度旋转单位
 
     var centerX = radius;
     var centerY = radius;
-    var sideLength = radius; // 六边形边长
+    var sideLength = radius - strokeWidth / 6; // 六边形边长
 
     path.moveTo(centerX + sideLength * cos(0), centerY + sideLength * sin(0));
 

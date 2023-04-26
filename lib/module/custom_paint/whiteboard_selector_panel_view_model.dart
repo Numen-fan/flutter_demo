@@ -16,6 +16,12 @@ class WhiteBoardSelectorPanelViewModel extends ChangeNotifier {
   // 是否展示画笔的宽度选择器
   bool showSizeSelector = false;
 
+  // 是否可撤销
+  bool undoEnable = false;
+
+  // 是否可重做
+  bool redoEnable = false;
+
   /// 颜色选择器的颜色配置，key = 颜色，value = 是否选中，UI上每个颜色监听自己是否被选中
   /// 注意：统一在[setCurSelectColor]中修改是否选中
   late final Map<Color, bool> painterColors;
@@ -32,11 +38,12 @@ class WhiteBoardSelectorPanelViewModel extends ChangeNotifier {
   // 当前画笔的类型
   late PainterType curPinterType;
   // key 画笔类型， value 画笔的宽度
-  Map<PainterType, PainterSize> _painterSizeCache = {};
+  final Map<PainterType, PainterSize> _painterSizeCache = {};
   // key 画笔类型， value 画笔的颜色
-  Map<PainterType, Color> _painterColorCacle = {};
+  final Map<PainterType, Color> _painterColorCache = {};
   /// ============= end of 以下是一些状态记录 ================
 
+  WhiteBoardModelListener? listener;
 
   WhiteBoardSelectorPanelViewModel() {
     defaultColor = const Color(0xFFFF3A3A);
@@ -88,6 +95,10 @@ class WhiteBoardSelectorPanelViewModel extends ChangeNotifier {
     painterTypes[curPinterType] = true;
   }
 
+  void setListener(WhiteBoardModelListener? l) {
+    listener = l;
+  }
+
   /// 设置选中的颜色
   /// 第[index]个颜色
   void setCurSelectColor(int index) {
@@ -104,7 +115,8 @@ class WhiteBoardSelectorPanelViewModel extends ChangeNotifier {
     showOrHideSizeSelector(false);
     notifyListeners();
     // 做cache缓存
-    _painterColorCacle[curPinterType] = curPaintColor;
+    _painterColorCache[curPinterType] = curPaintColor;
+    updatePainterStyle();
   }
 
   /// 设置选中的画笔
@@ -124,9 +136,13 @@ class WhiteBoardSelectorPanelViewModel extends ChangeNotifier {
 
     // 更换了画笔，恢复此前这个画笔的颜色
     if(showColorSelector) {
-      var newPainterColor = _painterColorCacle[curPinterType] ?? defaultColor;
-      setCurSelectColor(painterColors.keys.toList().indexOf(newPainterColor));
+      var newPainterColor = _painterColorCache[curPinterType] ?? defaultColor;
+      var index = painterColors.keys.toList().indexOf(newPainterColor);
+      setCurSelectColor(index);
+      // 通知UI滚动到相应的位置
+      listener?.onPainterColorChanged(index);
     }
+    updatePainterStyle();
     notifyListeners();
   }
 
@@ -150,10 +166,46 @@ class WhiteBoardSelectorPanelViewModel extends ChangeNotifier {
   }
 
   void setCurPainterSize(PainterSize painterSize) {
-    debugPrint("painterSize = $painterSize");
     _painterSizeCache[curPinterType] = painterSize;
     showOrHideSizeSelector(false); // 选择画笔宽度后，隐藏选择器
+    updatePainterStyle();
   }
+
+  /// 通知画笔样式
+  void updatePainterStyle() {
+    debugPrint("updatePainterStyle");
+  }
+
+  /// 退出批注
+  void quitWhiteBoard() {
+    debugPrint("quitWhiteBoard");
+  }
+
+  /// 删除标注
+  void deleteAnnotation() {
+    debugPrint("deleteAnnotation");
+  }
+
+  /// 保存截图
+  void saveScreenshot() {
+    debugPrint("saveScreenshot");
+  }
+
+  /// 撤销
+  void undo() {
+    debugPrint("undo");
+  }
+
+  /// 重做？？？
+ void redo() {
+   debugPrint("redo");
+ }
+}
+
+/// 提供一些监听
+mixin WhiteBoardModelListener {
+  // 画笔的颜色发生改变，比如切换画笔，相应的颜色也要发生改变，UI上可以让颜色选择器自动滚动到指定位置
+  onPainterColorChanged(int index);
 
 }
 

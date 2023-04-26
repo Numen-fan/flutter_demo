@@ -18,14 +18,12 @@ class TrianglePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var width = size.width - strokeWidth;
+    var width = size.width - strokeWidth / 2;
 
     var path = Path();
     path.moveTo(width / 2, 0);
     path.lineTo(width, width * cos(pi * 1/ 12));
     path.lineTo(0, width * cos(pi * 1/ 12));
-    path.lineTo(width / 2, 0);
-
     path.close();
 
     var paint = Paint()

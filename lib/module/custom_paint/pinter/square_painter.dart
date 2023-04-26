@@ -16,9 +16,9 @@ class SquarePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var width = size.width - strokeWidth;
+    var width = size.width;
     var rect = Rect.fromCenter(
-        center: Offset(width / 2, width / 2), width: width, height: width);
+        center: Offset(width / 2, width / 2), width: width - strokeWidth / 2, height: width - strokeWidth / 2);
 
     var paint = Paint()
       ..color = color

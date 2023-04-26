@@ -9,16 +9,16 @@ import 'package:flutter_demo/module/custom_paint/pinter/line_painter.dart';
 import 'package:flutter_demo/module/custom_paint/pinter/square_painter.dart';
 import 'package:flutter_demo/module/custom_paint/pinter/triangle_painter.dart';
 import 'package:flutter_demo/module/custom_paint/shape_widget.dart';
-import 'package:flutter_demo/module/custom_paint/size_decoration.dart';
+import 'package:flutter_demo/module/custom_paint/white_board_painter_szie_decoration.dart';
 import 'package:flutter_demo/module/custom_paint/whiteboard_selector_panel_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/util/image_loader2.dart';
-import 'package:flutter_demo/widgets/click_state_imgae_widget.dart';
+import 'package:flutter_demo/widgets/click_state_image_widget.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 /// Created by fanjiajia02 on 2023/4/21
-/// Desc: 白板工具栏面板组件
+/// Desc: 白板画笔选择组件
 
 class WhiteBoardControlPanelWidget extends StatefulWidget {
 
@@ -28,41 +28,60 @@ class WhiteBoardControlPanelWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _WhiteBoardControlPanelState();
 }
 
-class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
+class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
+  with WhiteBoardModelListener {
   late WhiteBoardSelectorPanelViewModel _viewModel;
+
+  // 画笔宽度选择器上默认颜色和选中颜色
+  static const defaultSizeColor = Color(0xFF626A80);
+  static const selectSizeColor = Color(0xFF3377FF);
+
+  final ScrollController _colorScrollController = ScrollController();
+  final ScrollController _painterScrollController = ScrollController();
+
+  bool landscape = false;
 
   @override
   void initState() {
     super.initState();
     _viewModel =
         Provider.of<WhiteBoardSelectorPanelViewModel>(context, listen: false);
+    _viewModel.setListener(this);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // 画笔宽度选择器
-        _buildPainterSizeSelector(),
-        // 底部选择面板
-        Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.horizontal(
-                left: Radius.circular(8.0), right: Radius.circular(8.0)),
-          ),
-          child: Column(
-            children: [
-              const SizedBox(height: 8),
-              // 颜色选择器
-              _buildColorSelector(),
-              // 画笔工具选择器
-              _buildPainterTypeSelector(),
-            ],
-          ),
-        ),
-      ],
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        // builder回传的orientation不准
+        landscape = MediaQuery.of(context).orientation == Orientation.landscape;
+        double width  = !landscape ? double.infinity : 510.0;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // 画笔宽度选择器
+            _buildPainterSizeSelector(),
+            // 底部选择面板
+            Container(
+              width: width,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8.0), topRight: Radius.circular(8.0)),
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(height: 8),
+                  // 颜色选择器
+                  _buildColorSelector(),
+                  // 画笔工具选择器
+                  _buildPainterTypeSelector(),
+                ],
+              ),
+            ),
+          ],
+        );
+      }
     );
   }
 
@@ -76,7 +95,8 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
           child: Column(
             children: [
               Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
                     width: 28,
@@ -85,7 +105,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
                       type: Type.url,
                       normalImgUrl: getImagePath("icon_white_board_size"),
                       activeImgUrl: getImagePath("icon_white_board_size_selected"),
-                      onClick: () => _viewModel.showOrHideSizeSelector(true),
+                      onClick: () => _viewModel.showOrHideSizeSelector(!_viewModel.showSizeSelector),
                     ),
                     margin: const EdgeInsets.only(left: 10, right: 7),
                   ),
@@ -105,12 +125,16 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
                     child: SizedBox(
                       height: 32,
                       child: ListView.builder(
-                        itemCount: _viewModel.painterColors.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
+                          controller: _colorScrollController,
+                          itemCount: _viewModel.painterColors.length,
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          physics: landscape ? null : const BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
                               onTap: () {
                                 _viewModel.setCurSelectColor(index);
+                                onPainterColorChanged(index);
                               },
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -139,7 +163,6 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
               Container(
                 margin: const EdgeInsets.only(top: 8),
                 height: 0.5,
-                width: double.infinity,
                 color: const Color(0xFFB8BFCC),
               )
             ],
@@ -149,13 +172,16 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
     );
   }
 
-  /// 构建底部绘制工具
+  /// 构建底部画笔选择器
   Widget _buildPainterTypeSelector() {
     return SizedBox(
         height: 70,
         child: ListView.builder(
           itemCount: _viewModel.painterTypes.length,
           scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+          physics: landscape ? null : const BouncingScrollPhysics(),
+          controller: _painterScrollController,
           itemBuilder: (context, index) {
             var painterType = _viewModel.painterTypes.keys.elementAt(index);
             return Selector<WhiteBoardSelectorPanelViewModel, bool>(
@@ -165,6 +191,11 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
                   behavior: HitTestBehavior.opaque,
                   onTap: () {
                     _viewModel.setCurSelectPainterType(index);
+                    double scrollOffset = 10.0;
+                    if(index < 2) {
+                      scrollOffset = 0;
+                    }
+                    _painterScrollController.animateTo(scrollOffset * index, duration: const Duration(milliseconds: 500), curve:  Curves.easeInOut);
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -199,7 +230,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
       case PainterType.arrow:
         painterTypeWidget = _buildCustomPainterType(ArrowPainter(
             const Color(0xFF8D97B2), 3, gradient: true, gradientColors: colors),
-            "箭头", selected);
+            "箭头", selected, trans: true);
         break;
       case PainterType.square:
         painterTypeWidget = _buildCustomPainterType(SquarePainter(
@@ -209,7 +240,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
       case PainterType.line:
         painterTypeWidget = _buildCustomPainterType(LinePainter(
             const Color(0xFF8D97B2), 3, gradient: true, gradientColors: colors),
-            "直线", selected);
+            "直线", selected, trans: true);
         break;
       case PainterType.circle:
         painterTypeWidget = _buildCustomPainterType(CirclePainter(
@@ -256,7 +287,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
   }
 
   /// 自定义图形的画笔工具项
-  Widget _buildCustomPainterType(CustomPainter painter, String desc, bool selected) {
+  Widget _buildCustomPainterType(CustomPainter painter, String desc, bool selected, {bool trans = false}) {
     return Column(
       children: [
         Container(
@@ -264,7 +295,9 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
           width: 26,
           height: 26,
           alignment: Alignment.center,
-          child: ShapeWidget(painter, width: 21, height: 21),
+          child: Transform.rotate(
+              angle: trans ? -pi / 4 : 0,
+              child: ShapeWidget(painter, width: 21, height: 21)),
         ),
         Text(
           desc,
@@ -289,11 +322,10 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
           offstage: !show, // 为true时child隐藏
           child: Container(
             margin: const EdgeInsets.only(left: 8, bottom: 7),
-            decoration: TooltipDecoration(), height: 49,
+            decoration: WhiteBoardPainterSizeDecoration(), height: 36,
             child: ListView.builder(
               itemCount: allSize.length,
               scrollDirection: Axis.horizontal,
-              itemExtent: 33,
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return GestureDetector(
@@ -355,16 +387,22 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
   Widget _getPainterSizeForPenWidget(PainterSize painterSize, bool selected) {
     var size = _painterSizeCast(painterSize);
     var iconPath = getImagePath("icon_white_board_line_size_$size");
-    return SvgPicture.asset(iconPath, width: 28, height: 28, color: selected ? Colors.blue : null);
+    return SvgPicture.asset(iconPath, width: 28, height: 28, color: selected ? selectSizeColor : null);
   }
 
+  /// 以下方法重复代码，可以考虑优化。
   Widget _getPainterSizeForLineWidget(PainterSize painterSize, bool selected) {
     var size = _painterSizeCast(painterSize);
     return Transform.rotate(
         key: ObjectKey("$painterSize$selected"),
         angle: -pi / 4,
-        child: ShapeWidget(
-            LinePainter(selected ? Colors.blue : Colors.grey, size.toDouble())));
+        child: Container(
+          width: 28,
+          height: 28,
+          alignment: Alignment.center,
+          child: ShapeWidget(
+              LinePainter(selected ? selectSizeColor : defaultSizeColor, size.toDouble())),
+        ));
   }
 
   Widget _getPainterSizeForArrowWidget(PainterSize painterSize, bool selected) {
@@ -372,24 +410,113 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
     return Transform.rotate(
       key: ObjectKey("$painterSize$selected"), //【关键】
         angle: -pi / 4,
-        child: ShapeWidget(
-            ArrowPainter(selected ? Colors.blue : Colors.grey, size.toDouble())));
+        child: Container(
+          width: 28,
+          height: 28,
+          alignment: Alignment.center,
+          child: ShapeWidget(
+              ArrowPainter(selected ? selectSizeColor : defaultSizeColor, size.toDouble())),
+        ));
   }
 
   Widget _getPainterSizeForSquareWidget(PainterSize painterSize, bool selected) {
-    return Container();
+    if(painterSize == PainterSize.translucency) {
+      var iconPath = getImagePath("icon_white_board_square_size" + (selected ? "_selected" : ""));
+      return SvgPicture.asset(iconPath, width: 28, height: 28);
+    } else if (painterSize == PainterSize.fill) {
+      return Container(
+        width: 28,
+        height: 28,
+        alignment: Alignment.center,
+        child: ShapeWidget(SquarePainter(
+            selected ? selectSizeColor : defaultSizeColor, 1.0,
+            fill: true),key: ObjectKey("$painterSize$selected")),
+      );
+    } else {
+      var size = _painterSizeCast(painterSize);
+      return Container(
+        width: 28,
+        height: 28,
+        alignment: Alignment.center,
+        child: ShapeWidget(SquarePainter(
+            selected ? selectSizeColor : defaultSizeColor, size.toDouble()), key: ObjectKey("$painterSize$selected"),),
+      );
+    }
   }
 
   Widget _getPainterSizeForHexagonWidget(PainterSize painterSize, bool selected) {
-    return Container();
+    if(painterSize == PainterSize.translucency) {
+      var iconPath = getImagePath("icon_white_board_hexagon_size" + (selected ? "_selected" : ""));
+      return SvgPicture.asset(iconPath, width: 28, height: 28);
+    } else if (painterSize == PainterSize.fill) {
+      return Container(
+        width: 28,
+        height: 28,
+        alignment: Alignment.center,
+        child: ShapeWidget(HexagonPainter(
+            selected ? selectSizeColor : defaultSizeColor, 1.0,
+            fill: true), key: ObjectKey("$painterSize$selected")),
+      );
+    } else {
+      var size = _painterSizeCast(painterSize);
+      return Container(
+        width: 28,
+        height: 28,
+        alignment: Alignment.center,
+        child: ShapeWidget(HexagonPainter(
+            selected ? selectSizeColor : defaultSizeColor, size.toDouble()), key: ObjectKey("$painterSize$selected")),
+      );
+    }
   }
 
   Widget _getPainterSizeForTriangleWidget(PainterSize painterSize, bool selected) {
-    return Container();
+    if(painterSize == PainterSize.translucency) {
+      var iconPath = getImagePath("icon_white_board_triangle_size" + (selected ? "_selected" : ""));
+      return SvgPicture.asset(iconPath, width: 28, height: 28);
+    } else if (painterSize == PainterSize.fill) {
+      return Container(
+        width: 28,
+        height: 28,
+        alignment: Alignment.center,
+        child: ShapeWidget(TrianglePainter(
+            selected ? selectSizeColor : defaultSizeColor, 1.0,
+            fill: true), key: ObjectKey("$painterSize$selected")),
+      );
+    } else {
+      var size = _painterSizeCast(painterSize);
+      return Container(
+        width: 28,
+        height: 28,
+        alignment: Alignment.center,
+        child: ShapeWidget(TrianglePainter(
+            selected ? selectSizeColor : defaultSizeColor, size.toDouble()), key: ObjectKey("$painterSize$selected")),
+      );
+    }
   }
 
   Widget _getPainterSizeForCircleWidget(PainterSize painterSize, bool selected) {
-    return Container();
+    if(painterSize == PainterSize.translucency) {
+      var iconPath = getImagePath("icon_white_board_circle_size" + (selected ? "_selected" : ""));
+      return SvgPicture.asset(iconPath, width: 28, height: 28);
+    } else if (painterSize == PainterSize.fill) {
+      return Container(
+        width: 28,
+        height: 28,
+        alignment: Alignment.center,
+        child: ShapeWidget(CirclePainter(
+            selected ? selectSizeColor : defaultSizeColor, 1.0,
+            fill: true), key: ObjectKey("$painterSize$selected"),),
+      );
+    } else {
+      var size = _painterSizeCast(painterSize);
+      return Container(
+        width: 28,
+        height: 28,
+        alignment: Alignment.center,
+        child: ShapeWidget(CirclePainter(
+            selected ? selectSizeColor : defaultSizeColor, size.toDouble()), key: ObjectKey("$painterSize$selected"),),
+      );
+    }
   }
 
   int _painterSizeCast(PainterSize painterSize) {
@@ -410,4 +537,21 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget> {
     return 1;
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    _colorScrollController.dispose();
+    _painterScrollController.dispose();
+    _viewModel.setListener(null);
+  }
+
+  @override
+  onPainterColorChanged(int index) {
+    double scrollOffset = 10.0;
+    if (index < 2) {
+      scrollOffset = 0;
+    }
+    _colorScrollController.animateTo(scrollOffset * index,
+        duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+  }
 }

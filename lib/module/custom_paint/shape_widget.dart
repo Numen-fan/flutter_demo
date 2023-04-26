@@ -10,7 +10,7 @@ class ShapeWidget extends StatelessWidget {
   final double width;
   final double height;
 
-  const ShapeWidget(this.painter, {Key? key, this.width = 23, this.height = 23}) : super(key: key);
+  const ShapeWidget(this.painter, {Key? key, this.width = 20, this.height = 20}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

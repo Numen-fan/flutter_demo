@@ -22,7 +22,7 @@ class ArrowPainter extends CustomPainter {
       ..color = color
       ..strokeWidth = strokeWidth
       ..isAntiAlias = true
-      ..shader = gradient ? ui.Gradient.linear(const Offset(0,0), Offset(size.width, size.height), gradientColors!): null
+      ..shader = gradient ? ui.Gradient.linear(Offset(size.width / 2, 0), Offset(size.width / 2, size.width), gradientColors!): null
       ..style =PaintingStyle.fill;
 
 

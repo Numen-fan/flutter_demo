@@ -17,7 +17,7 @@ class CirclePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var radius = (size.width - strokeWidth) / 2;
+    var radius = (size.width - strokeWidth / 2) / 2;
     var paint = Paint()
       ..color = color
       ..strokeWidth = strokeWidth
@@ -25,7 +25,7 @@ class CirclePainter extends CustomPainter {
       ..shader = gradient ? ui.Gradient.linear(const Offset(0,0), Offset(size.width, size.height), gradientColors!): null
       ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke
       ..strokeJoin = StrokeJoin.round;
-    canvas.drawCircle(Offset(radius, radius), radius, paint);
+    canvas.drawCircle(Offset(size.width / 2, size.width / 2), radius, paint);
   }
 
   @override

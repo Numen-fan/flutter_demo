@@ -21,7 +21,7 @@ class LinePainter extends CustomPainter {
     var paint = Paint()
       ..color = color
       ..strokeWidth = strokeWidth
-      ..shader = gradient ? ui.Gradient.linear(const Offset(0,0), Offset(size.width, size.height), gradientColors!): null
+      ..shader = gradient ? ui.Gradient.linear(Offset(size.width, size.height), const Offset(0,0), gradientColors!): null
       ..isAntiAlias = true;
 
     RRect rect = RRect.fromLTRBR(0, width / 2 - strokeWidth / 2, width, width / 2 + strokeWidth / 2,
