@@ -35,3 +35,11 @@ enum PainterSize {
   width4,
   width5
 }
+
+/// 绘制模式
+enum DrawMode {
+  // 批注
+  annotation,
+  // 白板
+  whiteboard
+}

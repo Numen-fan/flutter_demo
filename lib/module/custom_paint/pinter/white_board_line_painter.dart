@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 
 /// Created by fanjiajia02 on 2023/4/20
 /// Desc: 画斜线
-class LinePainter extends CustomPainter {
+class WhiteBoardLinePainter extends CustomPainter {
 
   final Color color;
   final double strokeWidth;
   bool gradient;
   List<Color>? gradientColors;
 
-  LinePainter(this.color, this.strokeWidth, {this.gradient = false, this.gradientColors});
+  WhiteBoardLinePainter(this.color, this.strokeWidth, {this.gradient = false, this.gradientColors});
 
   @override
   void paint(Canvas canvas, Size size) {

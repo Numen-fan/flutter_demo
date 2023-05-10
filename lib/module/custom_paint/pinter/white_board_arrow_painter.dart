@@ -6,14 +6,14 @@ import 'package:flutter/cupertino.dart';
 /// Created by fanjiajia02 on 2023/4/20
 /// Desc: 箭头
 
-class ArrowPainter extends CustomPainter {
+class WhiteBoardArrowPainter extends CustomPainter {
 
   final Color color;
   final double strokeWidth;
   bool gradient;
   List<Color>? gradientColors;
 
-  ArrowPainter(this.color, this.strokeWidth, {this.gradient = false, this.gradientColors});
+  WhiteBoardArrowPainter(this.color, this.strokeWidth, {this.gradient = false, this.gradientColors});
 
   @override
   void paint(Canvas canvas, Size size) {

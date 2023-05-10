@@ -1,11 +1,10 @@
 import 'dart:ui' as ui;
-
 import 'package:flutter/cupertino.dart';
 
 /// Created by fanjiajia02 on 2023/4/20
-/// Desc: 画圆
+/// Desc: 画正方形
 
-class CirclePainter extends CustomPainter {
+class WhiteBoardSquarePainter extends CustomPainter {
 
   final Color color;
   final double strokeWidth;
@@ -13,19 +12,22 @@ class CirclePainter extends CustomPainter {
   bool gradient;
   List<Color>? gradientColors;
 
-  CirclePainter(this.color, this.strokeWidth, {this.fill = false, this.gradient = false, this.gradientColors});
+  WhiteBoardSquarePainter(this.color, this.strokeWidth, {this.fill = false, this.gradient = false, this.gradientColors});
 
   @override
   void paint(Canvas canvas, Size size) {
-    var radius = (size.width - strokeWidth / 2) / 2;
+    var width = size.width;
+    var rect = Rect.fromCenter(
+        center: Offset(width / 2, width / 2), width: width - strokeWidth / 2, height: width - strokeWidth / 2);
+
     var paint = Paint()
       ..color = color
       ..strokeWidth = strokeWidth
       ..isAntiAlias = true
-      ..shader = gradient ? ui.Gradient.linear(const Offset(0,0), Offset(size.width, size.height), gradientColors!): null
       ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke
+      ..shader = gradient ? ui.Gradient.linear(const Offset(0,0), Offset(size.width, size.height), gradientColors!): null
       ..strokeJoin = StrokeJoin.round;
-    canvas.drawCircle(Offset(size.width / 2, size.width / 2), radius, paint);
+    canvas.drawRect(rect, paint);
   }
 
   @override

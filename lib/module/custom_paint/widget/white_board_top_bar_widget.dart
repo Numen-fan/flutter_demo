@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/module/custom_paint/whiteboard_selector_panel_view_model.dart';
+import 'package:flutter_demo/module/custom_paint/view_model/white_board_selector_view_model.dart';
 import 'package:flutter_demo/util/image_loader2.dart';
 import 'package:provider/provider.dart';
 
@@ -17,18 +16,17 @@ class WhiteBoardTopBarWidget extends StatefulWidget {
 class WhiteBoardTopBarState extends State<WhiteBoardTopBarWidget> {
   bool landscape = false;
 
-  late WhiteBoardSelectorPanelViewModel _viewModel;
+  late WhiteBoardSelectorViewModel _viewModel;
 
   @override
   void initState() {
     super.initState();
-    _viewModel = context.read<WhiteBoardSelectorPanelViewModel>();
+    _viewModel = context.read<WhiteBoardSelectorViewModel>();
   }
 
   @override
   Widget build(BuildContext context) {
     return OrientationBuilder(builder: (context, orientation) {
-      debugPrint("build");
       // builder回传的orientation不准
       landscape = MediaQuery.of(context).orientation == Orientation.landscape;
       return Container(
@@ -49,7 +47,7 @@ class WhiteBoardTopBarState extends State<WhiteBoardTopBarWidget> {
             Expanded(child: Container()),
 
             // 撤销
-            Selector<WhiteBoardSelectorPanelViewModel, bool>(
+            Selector<WhiteBoardSelectorViewModel, bool>(
               selector: (context, model) => model.undoEnable,
               builder: (context, undoEnable, _) {
                 String iconName = "icon_white_board_undo_" + (undoEnable ? "enable" : "disable");
@@ -63,7 +61,7 @@ class WhiteBoardTopBarState extends State<WhiteBoardTopBarWidget> {
               }
             ),
 
-            Selector<WhiteBoardSelectorPanelViewModel, bool>(
+            Selector<WhiteBoardSelectorViewModel, bool>(
                 selector: (context, model) => model.redoEnable,
                 builder: (context, redoEnable, _) {
                   String iconName = "icon_white_board_redo_" + (redoEnable ? "enable" : "disable");
@@ -87,11 +85,14 @@ class WhiteBoardTopBarState extends State<WhiteBoardTopBarWidget> {
             ),
 
             // 保存截图
-            GestureDetector(
-              onTap: () => _viewModel.saveScreenshot(),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal:10),
-                child: ImageLoader(getImagePath("icon_white_board_save")),
+            Offstage(
+              offstage: !_viewModel.supportSave,
+              child: GestureDetector(
+                onTap: () => _viewModel.saveScreenshot(),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal:10),
+                  child: ImageLoader(getImagePath("icon_white_board_save")),
+                ),
               ),
             ),
             const SizedBox(width: 5,)

@@ -8,7 +8,7 @@ import 'package:flutter_demo/module/theme/theme_view_model.dart';
 import 'package:flutter_demo/pages/animation_page.dart';
 import 'package:flutter_demo/pages/bottom_navigator_page.dart';
 import 'package:flutter_demo/pages/bubble_page.dart';
-import 'package:flutter_demo/module/custom_paint/custom_painter_page.dart';
+import 'package:flutter_demo/module/custom_paint/page/white_board_demo_page.dart';
 import 'package:flutter_demo/pages/http_request_page.dart';
 import 'package:flutter_demo/pages/dialog_page.dart';
 import 'package:flutter_demo/pages/tv_demo.dart';
@@ -146,8 +146,8 @@ class MyApp extends StatelessWidget {
                       return const ThemePage();
                     case AnimationPage.routeName:
                       return const AnimationPage();
-                    case CustomPainterPage.routeName:
-                      return const CustomPainterPage();
+                    case WhiteBoardDemoPage.routeName:
+                      return const WhiteBoardDemoPage();
                   }
                   return route;
                 },

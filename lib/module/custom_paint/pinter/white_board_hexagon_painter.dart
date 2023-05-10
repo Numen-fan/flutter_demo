@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 /// Created by fanjiajia02 on 2023/4/19
 /// Desc: 正六边形
 
-class HexagonPainter extends CustomPainter {
+class WhiteBoardHexagonPainter extends CustomPainter {
 
   final Color color;
   final double strokeWidth;
@@ -14,7 +14,7 @@ class HexagonPainter extends CustomPainter {
   bool gradient;
   List<Color>? gradientColors;
 
-  HexagonPainter(this.color, this.strokeWidth, {this.fill = false, this.gradient = false, this.gradientColors});
+  WhiteBoardHexagonPainter(this.color, this.strokeWidth, {this.fill = false, this.gradient = false, this.gradientColors});
 
 
   @override

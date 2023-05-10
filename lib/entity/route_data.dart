@@ -1,6 +1,6 @@
 import 'package:flutter_demo/listview/custom_list_view_page.dart';
 import 'package:flutter_demo/module/StudyDemo/study_demo_main.dart';
-import 'package:flutter_demo/module/custom_paint/custom_painter_page.dart';
+import 'package:flutter_demo/module/custom_paint/page/white_board_demo_page.dart';
 import 'package:flutter_demo/module/grouplist/member_list.dart';
 import 'package:flutter_demo/module/theme/theme_page.dart';
 import 'package:flutter_demo/pages/animation_page.dart';
@@ -34,7 +34,7 @@ class RouteData {
     RouteData("Tv Demo", TvDemoPage.routeName),
     RouteData("Theme", ThemePage.routeName),
     RouteData("Animation", AnimationPage.routeName),
-    RouteData("CustomPaint", CustomPainterPage.routeName),
+    RouteData("CustomPaint", WhiteBoardDemoPage.routeName),
     RouteData("Bubble Demo", BubblePage.routeName),
     RouteData("HttpClient page", HttpRequestPage.routeName),
     RouteData("Bottom navigator page", BottomNavigatorPage.routeName),

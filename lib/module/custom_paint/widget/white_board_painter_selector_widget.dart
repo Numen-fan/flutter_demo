@@ -1,16 +1,16 @@
 import 'dart:math';
 
 import 'package:flutter_demo/module/custom_paint/entity/white_board_define.dart';
-import 'package:flutter_demo/module/custom_paint/pinter/arrow_painter.dart';
-import 'package:flutter_demo/module/custom_paint/pinter/circle_painter.dart';
-import 'package:flutter_demo/module/custom_paint/pinter/color_selector_printer.dart';
-import 'package:flutter_demo/module/custom_paint/pinter/hexagon_painter.dart';
-import 'package:flutter_demo/module/custom_paint/pinter/line_painter.dart';
-import 'package:flutter_demo/module/custom_paint/pinter/square_painter.dart';
-import 'package:flutter_demo/module/custom_paint/pinter/triangle_painter.dart';
-import 'package:flutter_demo/module/custom_paint/shape_widget.dart';
-import 'package:flutter_demo/module/custom_paint/white_board_painter_szie_decoration.dart';
-import 'package:flutter_demo/module/custom_paint/whiteboard_selector_panel_view_model.dart';
+import 'package:flutter_demo/module/custom_paint/pinter/white_board_arrow_painter.dart';
+import 'package:flutter_demo/module/custom_paint/pinter/white_board_circle_painter.dart';
+import 'package:flutter_demo/module/custom_paint/pinter/white_board_color_selector_printer.dart';
+import 'package:flutter_demo/module/custom_paint/pinter/white_board_hexagon_painter.dart';
+import 'package:flutter_demo/module/custom_paint/pinter/white_board_line_painter.dart';
+import 'package:flutter_demo/module/custom_paint/pinter/white_board_square_painter.dart';
+import 'package:flutter_demo/module/custom_paint/pinter/white_board_triangle_painter.dart';
+import 'package:flutter_demo/module/custom_paint/widget/white_board_shape_widget.dart';
+import 'package:flutter_demo/module/custom_paint/widget/white_board_painter_szie_decoration.dart';
+import 'package:flutter_demo/module/custom_paint/view_model/white_board_selector_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/util/image_loader2.dart';
 import 'package:flutter_demo/widgets/click_state_image_widget.dart';
@@ -20,17 +20,17 @@ import 'package:provider/provider.dart';
 /// Created by fanjiajia02 on 2023/4/21
 /// Desc: 白板画笔选择组件
 
-class WhiteBoardControlPanelWidget extends StatefulWidget {
+class WhiteBoardPainterSelectorWidget extends StatefulWidget {
 
-  const WhiteBoardControlPanelWidget({Key? key}) : super(key: key);
+  const WhiteBoardPainterSelectorWidget({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _WhiteBoardControlPanelState();
 }
 
-class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
+class _WhiteBoardControlPanelState extends State<WhiteBoardPainterSelectorWidget>
   with WhiteBoardModelListener {
-  late WhiteBoardSelectorPanelViewModel _viewModel;
+  late WhiteBoardSelectorViewModel _viewModel;
 
   // 画笔宽度选择器上默认颜色和选中颜色
   static const defaultSizeColor = Color(0xFF626A80);
@@ -45,7 +45,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
   void initState() {
     super.initState();
     _viewModel =
-        Provider.of<WhiteBoardSelectorPanelViewModel>(context, listen: false);
+        Provider.of<WhiteBoardSelectorViewModel>(context, listen: false);
     _viewModel.setListener(this);
   }
 
@@ -87,7 +87,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
 
   /// 构建上方的颜色选择器
   Widget _buildColorSelector() {
-    return Selector<WhiteBoardSelectorPanelViewModel, bool>(
+    return Selector<WhiteBoardSelectorViewModel, bool>(
       selector: (_, viewModel) => viewModel.showColorSelector,
       builder: (context, show, _) {
         return Offstage(
@@ -139,11 +139,11 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 8.0),
-                                child: Selector<WhiteBoardSelectorPanelViewModel, bool>(
+                                child: Selector<WhiteBoardSelectorViewModel, bool>(
                                   selector: (context, model) => model.painterColors.values.elementAt(index),
                                   builder: (context, selected, _) {
-                                    return ShapeWidget(
-                                      ColorSelectorPrinter(
+                                    return WhiteBoardShapeWidget(
+                                      WhiteBoardColorSelectorPrinter(
                                           _viewModel.painterColors.keys.elementAt(index),
                                           selected: selected),
                                       width: 32,
@@ -184,7 +184,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
           controller: _painterScrollController,
           itemBuilder: (context, index) {
             var painterType = _viewModel.painterTypes.keys.elementAt(index);
-            return Selector<WhiteBoardSelectorPanelViewModel, bool>(
+            return Selector<WhiteBoardSelectorViewModel, bool>(
               selector: (context, model) => model.painterTypes.values.elementAt(index),
               builder: (context, selected, _) {
                 return GestureDetector(
@@ -192,10 +192,13 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
                   onTap: () {
                     _viewModel.setCurSelectPainterType(index);
                     double scrollOffset = 10.0;
-                    if(index < 2) {
+                    if (index < 2) {
                       scrollOffset = 0;
                     }
-                    _painterScrollController.animateTo(scrollOffset * index, duration: const Duration(milliseconds: 500), curve:  Curves.easeInOut);
+                    _painterScrollController.animateTo(
+                        scrollOffset * (index + 1),
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeInOut);
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -228,32 +231,32 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
         painterTypeWidget = _buildImagePainterType("icon_white_board_painter_eraser", "橡皮擦", selected);
         break;
       case PainterType.arrow:
-        painterTypeWidget = _buildCustomPainterType(ArrowPainter(
+        painterTypeWidget = _buildCustomPainterType(WhiteBoardArrowPainter(
             const Color(0xFF8D97B2), 3, gradient: true, gradientColors: colors),
             "箭头", selected, trans: true);
         break;
       case PainterType.square:
-        painterTypeWidget = _buildCustomPainterType(SquarePainter(
+        painterTypeWidget = _buildCustomPainterType(WhiteBoardSquarePainter(
             const Color(0xFF8D97B2), 3, gradient: true, gradientColors: colors),
             "方形", selected);
         break;
       case PainterType.line:
-        painterTypeWidget = _buildCustomPainterType(LinePainter(
+        painterTypeWidget = _buildCustomPainterType(WhiteBoardLinePainter(
             const Color(0xFF8D97B2), 3, gradient: true, gradientColors: colors),
             "直线", selected, trans: true);
         break;
       case PainterType.circle:
-        painterTypeWidget = _buildCustomPainterType(CirclePainter(
+        painterTypeWidget = _buildCustomPainterType(WhiteBoardCirclePainter(
             const Color(0xFF8D97B2), 3, gradient: true, gradientColors: colors),
             "圆形", selected);
         break;
       case PainterType.triangle:
-        painterTypeWidget = _buildCustomPainterType(TrianglePainter(
+        painterTypeWidget = _buildCustomPainterType(WhiteBoardTrianglePainter(
             const Color(0xFF8D97B2), 3, gradient: true, gradientColors: colors),
             "三角形", selected);
         break;
       case PainterType.hexagon:
-        painterTypeWidget = _buildCustomPainterType(HexagonPainter(
+        painterTypeWidget = _buildCustomPainterType(WhiteBoardHexagonPainter(
             const Color(0xFF8D97B2), 3, gradient: true, gradientColors: colors),
             "六边形", selected);
         break;
@@ -297,7 +300,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
           alignment: Alignment.center,
           child: Transform.rotate(
               angle: trans ? -pi / 4 : 0,
-              child: ShapeWidget(painter, width: 21, height: 21)),
+              child: WhiteBoardShapeWidget(painter, width: 21, height: 21)),
         ),
         Text(
           desc,
@@ -312,7 +315,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
 
   /// 画笔宽度选择器
   Widget _buildPainterSizeSelector() {
-    return Selector<WhiteBoardSelectorPanelViewModel, bool>(
+    return Selector<WhiteBoardSelectorViewModel, bool>(
       selector: (context, model) => model.showSizeSelector,
       builder: (context, show, _) {
         var painterType = _viewModel.curPinterType;
@@ -400,8 +403,8 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
           width: 28,
           height: 28,
           alignment: Alignment.center,
-          child: ShapeWidget(
-              LinePainter(selected ? selectSizeColor : defaultSizeColor, size.toDouble())),
+          child: WhiteBoardShapeWidget(
+              WhiteBoardLinePainter(selected ? selectSizeColor : defaultSizeColor, size.toDouble())),
         ));
   }
 
@@ -414,8 +417,8 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
           width: 28,
           height: 28,
           alignment: Alignment.center,
-          child: ShapeWidget(
-              ArrowPainter(selected ? selectSizeColor : defaultSizeColor, size.toDouble())),
+          child: WhiteBoardShapeWidget(
+              WhiteBoardArrowPainter(selected ? selectSizeColor : defaultSizeColor, size.toDouble())),
         ));
   }
 
@@ -428,7 +431,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
         width: 28,
         height: 28,
         alignment: Alignment.center,
-        child: ShapeWidget(SquarePainter(
+        child: WhiteBoardShapeWidget(WhiteBoardSquarePainter(
             selected ? selectSizeColor : defaultSizeColor, 1.0,
             fill: true),key: ObjectKey("$painterSize$selected")),
       );
@@ -438,7 +441,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
         width: 28,
         height: 28,
         alignment: Alignment.center,
-        child: ShapeWidget(SquarePainter(
+        child: WhiteBoardShapeWidget(WhiteBoardSquarePainter(
             selected ? selectSizeColor : defaultSizeColor, size.toDouble()), key: ObjectKey("$painterSize$selected"),),
       );
     }
@@ -453,7 +456,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
         width: 28,
         height: 28,
         alignment: Alignment.center,
-        child: ShapeWidget(HexagonPainter(
+        child: WhiteBoardShapeWidget(WhiteBoardHexagonPainter(
             selected ? selectSizeColor : defaultSizeColor, 1.0,
             fill: true), key: ObjectKey("$painterSize$selected")),
       );
@@ -463,7 +466,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
         width: 28,
         height: 28,
         alignment: Alignment.center,
-        child: ShapeWidget(HexagonPainter(
+        child: WhiteBoardShapeWidget(WhiteBoardHexagonPainter(
             selected ? selectSizeColor : defaultSizeColor, size.toDouble()), key: ObjectKey("$painterSize$selected")),
       );
     }
@@ -478,7 +481,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
         width: 28,
         height: 28,
         alignment: Alignment.center,
-        child: ShapeWidget(TrianglePainter(
+        child: WhiteBoardShapeWidget(WhiteBoardTrianglePainter(
             selected ? selectSizeColor : defaultSizeColor, 1.0,
             fill: true), key: ObjectKey("$painterSize$selected")),
       );
@@ -488,7 +491,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
         width: 28,
         height: 28,
         alignment: Alignment.center,
-        child: ShapeWidget(TrianglePainter(
+        child: WhiteBoardShapeWidget(WhiteBoardTrianglePainter(
             selected ? selectSizeColor : defaultSizeColor, size.toDouble()), key: ObjectKey("$painterSize$selected")),
       );
     }
@@ -503,7 +506,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
         width: 28,
         height: 28,
         alignment: Alignment.center,
-        child: ShapeWidget(CirclePainter(
+        child: WhiteBoardShapeWidget(WhiteBoardCirclePainter(
             selected ? selectSizeColor : defaultSizeColor, 1.0,
             fill: true), key: ObjectKey("$painterSize$selected"),),
       );
@@ -513,7 +516,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
         width: 28,
         height: 28,
         alignment: Alignment.center,
-        child: ShapeWidget(CirclePainter(
+        child: WhiteBoardShapeWidget(WhiteBoardCirclePainter(
             selected ? selectSizeColor : defaultSizeColor, size.toDouble()), key: ObjectKey("$painterSize$selected"),),
       );
     }
@@ -551,7 +554,7 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardControlPanelWidget>
     if (index < 2) {
       scrollOffset = 0;
     }
-    _colorScrollController.animateTo(scrollOffset * index,
+    _colorScrollController.animateTo(scrollOffset * (index + 1),
         duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
   }
 }

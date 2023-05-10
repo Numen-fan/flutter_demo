@@ -5,7 +5,10 @@ import 'package:flutter_demo/module/custom_paint/entity/white_board_define.dart'
 /// Created by fanjiajia02 on 2023/4/21
 /// Desc: ViewModel
 
-class WhiteBoardSelectorPanelViewModel extends ChangeNotifier {
+class WhiteBoardSelectorViewModel extends ChangeNotifier {
+
+  // 当前的模式，批注和白板
+  final DrawMode curDrawMode;
 
   // 默认画笔的颜色
   late final Color defaultColor;
@@ -21,6 +24,9 @@ class WhiteBoardSelectorPanelViewModel extends ChangeNotifier {
 
   // 是否可重做
   bool redoEnable = false;
+
+  // 是否支持保存截图
+  bool supportSave = true;
 
   /// 颜色选择器的颜色配置，key = 颜色，value = 是否选中，UI上每个颜色监听自己是否被选中
   /// 注意：统一在[setCurSelectColor]中修改是否选中
@@ -45,12 +51,16 @@ class WhiteBoardSelectorPanelViewModel extends ChangeNotifier {
 
   WhiteBoardModelListener? listener;
 
-  WhiteBoardSelectorPanelViewModel() {
-    defaultColor = const Color(0xFFFF3A3A);
+  WhiteBoardSelectorViewModel(
+      {this.curDrawMode = DrawMode.annotation, this.supportSave = true}) {
+    // 批注默认红色，白板默认黑色
+    defaultColor = curDrawMode == DrawMode.annotation
+        ? const Color(0xFFFF3A3A)
+        : const Color(0xFF1A1C1F);
     // 初始化画笔颜色选择器的颜色
     _initPainterColors();
-    // 初始化画笔类型信息
-    _initPainterTypes();
+    // 初始化画笔信息
+    _initPainterInfo();
   }
 
   /// 初始化颜色选择器的颜色
@@ -71,7 +81,7 @@ class WhiteBoardSelectorPanelViewModel extends ChangeNotifier {
     painterColors[curPaintColor] = true;
   }
 
-  void _initPainterTypes() {
+  void _initPainterInfo() {
     painterTypes = {};
     painterSizeMap = {};
     // 一共有两种画笔宽度，有无填充和透明度
@@ -171,7 +181,11 @@ class WhiteBoardSelectorPanelViewModel extends ChangeNotifier {
     updatePainterStyle();
   }
 
-  /// 通知画笔样式
+  /// 通知画笔样式到native
+  /// 1. 当前的画笔是[curPinterType]
+  /// 2. 当前的颜色是[curPaintColor]
+  /// 3. 当前的画笔尺寸是[getPainterSize(curPinterType)]
+  /// 4. **注意** 如果是『选择』『橡皮擦』两种类型，没有color和size哟，接口设计上注意一下
   void updatePainterStyle() {
     debugPrint("updatePainterStyle");
   }
