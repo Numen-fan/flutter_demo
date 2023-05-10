@@ -18,7 +18,7 @@ class WhiteBoardDemoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       // appBar: AppBar(title: Text("写写画画"),),
       body: ChangeNotifierProvider<WhiteBoardSelectorViewModel>(
         create: (_) => WhiteBoardSelectorViewModel(),

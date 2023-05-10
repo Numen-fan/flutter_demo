@@ -29,8 +29,17 @@ class WhiteBoardTopBarState extends State<WhiteBoardTopBarWidget> {
     return OrientationBuilder(builder: (context, orientation) {
       // builder回传的orientation不准
       landscape = MediaQuery.of(context).orientation == Orientation.landscape;
+      var statusBarHeight = MediaQuery.of(context).systemGestureInsets.top;
       return Container(
-        margin: EdgeInsets.only(top: landscape ? MediaQuery.of(context).systemGestureInsets.top + 5 : 55),
+        height: landscape ? 64 : 111,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0x80000000), Color(0x00000000)]
+          )
+        ),
+        padding: EdgeInsets.only(top: landscape ? 20 : 58 - statusBarHeight),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

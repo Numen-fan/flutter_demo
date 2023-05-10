@@ -51,37 +51,58 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardPainterSelectorWidget
 
   @override
   Widget build(BuildContext context) {
-    return OrientationBuilder(
-      builder: (context, orientation) {
-        // builder回传的orientation不准
-        landscape = MediaQuery.of(context).orientation == Orientation.landscape;
-        double width  = !landscape ? double.infinity : 510.0;
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 画笔宽度选择器
-            _buildPainterSizeSelector(),
-            // 底部选择面板
-            Container(
-              width: width,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8.0), topRight: Radius.circular(8.0)),
+    return Stack(
+      alignment:AlignmentDirectional.bottomCenter,
+      children: [
+        // 背景
+        Container(
+          height: 130,
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0x00000000), Color(0x80000000)]
+              )
+          ),
+        ),
+        // 内容前景
+        _getContentWidget()
+      ],
+    );
+  }
+
+  Widget _getContentWidget() {
+     return OrientationBuilder(
+        builder: (context, orientation) {
+          // builder回传的orientation不准
+          landscape = MediaQuery.of(context).orientation == Orientation.landscape;
+          double width  = !landscape ? double.infinity : 510.0;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 画笔宽度选择器
+              _buildPainterSizeSelector(),
+              // 底部选择面板
+              Container(
+                width: width,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8.0), topRight: Radius.circular(8.0)),
+                ),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 8),
+                    // 颜色选择器
+                    _buildColorSelector(),
+                    // 画笔工具选择器
+                    _buildPainterTypeSelector(),
+                  ],
+                ),
               ),
-              child: Column(
-                children: [
-                  const SizedBox(height: 8),
-                  // 颜色选择器
-                  _buildColorSelector(),
-                  // 画笔工具选择器
-                  _buildPainterTypeSelector(),
-                ],
-              ),
-            ),
-          ],
-        );
-      }
+            ],
+          );
+        }
     );
   }
 
