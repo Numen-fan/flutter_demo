@@ -149,8 +149,10 @@ class WhiteBoardSelectorViewModel extends ChangeNotifier {
       var newPainterColor = _painterColorCache[curPinterType] ?? defaultColor;
       var index = painterColors.keys.toList().indexOf(newPainterColor);
       setCurSelectColor(index);
-      // 通知UI滚动到相应的位置
-      listener?.onPainterColorChanged(index);
+      // 通知UI滚动到相应的位置，尾部不再滚动，避免弹性动画
+      if (index + 2 < painterColors.length) {
+        listener?.onPainterColorChanged(index);
+      }
     }
     updatePainterStyle();
     notifyListeners();

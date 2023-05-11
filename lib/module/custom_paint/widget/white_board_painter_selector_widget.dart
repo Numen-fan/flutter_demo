@@ -155,7 +155,9 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardPainterSelectorWidget
                             return GestureDetector(
                               onTap: () {
                                 _viewModel.setCurSelectColor(index);
-                                onPainterColorChanged(index);
+                                if(index + 2 < _viewModel.painterColors.length) {
+                                  onPainterColorChanged(index);
+                                }
                               },
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -212,6 +214,10 @@ class _WhiteBoardControlPanelState extends State<WhiteBoardPainterSelectorWidget
                   behavior: HitTestBehavior.opaque,
                   onTap: () {
                     _viewModel.setCurSelectPainterType(index);
+                    // 避免尾部弹性动画太大
+                    if(index + 2 >= _viewModel.painterTypes.length) {
+                      return;
+                    }
                     double scrollOffset = 10.0;
                     if (index < 2) {
                       scrollOffset = 0;

@@ -17,19 +17,21 @@ class WhiteBoardDemoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      // appBar: AppBar(title: Text("写写画画"),),
-      body: ChangeNotifierProvider<WhiteBoardSelectorViewModel>(
-        create: (_) => WhiteBoardSelectorViewModel(),
-        child: Column(
-          children: [
-            const WhiteBoardTopBarWidget(),
-            Expanded(child: Container()),
-            const WhiteBoardPainterSelectorWidget()
-          ],
-        ),
-      )
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        // appBar: AppBar(title: Text("写写画画"),),
+        body: ChangeNotifierProvider<WhiteBoardSelectorViewModel>(
+          create: (_) => WhiteBoardSelectorViewModel(),
+          child: Column(
+            children: [
+              const WhiteBoardTopBarWidget(),
+              Expanded(child: Container()),
+              const WhiteBoardPainterSelectorWidget()
+            ],
+          ),
+        )
+      ),
     );
   }
 
